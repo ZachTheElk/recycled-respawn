@@ -1,5 +1,6 @@
 ---
 import FeaturedStory from '../components/FeaturedStory.astro';
+import GamingSection from '../components/GamingSection.astro';
 import NewestColumn from '../components/NewestColumn.astro';
 import Layout from '../layouts/Layout.astro';
 
@@ -26,6 +27,43 @@ const newestColumn = {
 	author: 'Development sample — not ZachTheElk',
 	publicationDate: 'Sample date: September 5, 2026',
 	readTime: '4 min read sample',
+	developmentOnly: true,
+};
+
+// Development-only Gaming samples for testing section hierarchy and density.
+const gamingSection = {
+	leadStory: {
+		headline: 'What Changes When a Familiar World Stops Asking You to Hurry',
+		dek: 'A layout sample considering how slower goals and repeated routes can turn progress into a different kind of play.',
+		author: 'Development sample — not ZachTheElk',
+		publicationDate: 'Sample date: September 5, 2026',
+		readTime: '7 min read sample',
+		image: {
+			alt: 'Development-only Gaming image placeholder; no editorial image has been selected.',
+		},
+	},
+	supportingStories: [
+		{
+			headline: 'A Good Map Can Be More Memorable Than the Destination',
+			dek: 'Development-only copy for testing a compact supporting story with a short excerpt.',
+			author: 'Development sample — not ZachTheElk',
+			publicationDate: 'Sample date: September 5, 2026',
+			readTime: '5 min read sample',
+		},
+		{
+			headline: 'Testing How Reviews Fit Without Turning Into Scores',
+			author: 'Development sample — not ZachTheElk',
+			publicationDate: 'Sample date: September 5, 2026',
+			readTime: '8 min read sample',
+			type: 'review' as const,
+		},
+		{
+			headline: 'The Small Interface Detail That Changes an Entire Routine',
+			author: 'Development sample — not ZachTheElk',
+			publicationDate: 'Sample date: September 5, 2026',
+			readTime: '4 min read sample',
+		},
+	],
 	developmentOnly: true,
 };
 ---
@@ -55,6 +93,7 @@ const newestColumn = {
 			<main class="main-region" id="main-content" tabindex="-1">
 				<FeaturedStory {...featuredStory} />
 				<NewestColumn {...newestColumn} />
+				<GamingSection {...gamingSection} />
 			</main>
 
 			<aside class="right-rail" aria-labelledby="right-rail-title">

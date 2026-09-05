@@ -1,0 +1,331 @@
+---
+interface Story {
+	headline: string;
+	dek?: string;
+	author: string;
+	publicationDate: string;
+	publicationDatetime?: string;
+	readTime: string;
+	href?: string;
+	type?: 'article' | 'review';
+}
+
+interface LeadStory extends Story {
+	image: {
+		src?: string;
+		alt: string;
+	};
+}
+
+interface Props {
+	leadStory: LeadStory;
+	supportingStories: Story[];
+	developmentOnly?: boolean;
+}
+
+const { leadStory, supportingStories, developmentOnly = false } = Astro.props;
+---
+
+<section class="gaming-section" aria-labelledby="gaming-section-title">
+	<header class="gaming-section__header">
+		<h2 id="gaming-section-title">Gaming</h2>
+		{developmentOnly && <p>Development-only section sample</p>}
+	</header>
+
+	<div class="gaming-section__stories">
+		<article class="gaming-lead" aria-labelledby="gaming-lead-headline">
+			<figure class="gaming-lead__media">
+				{
+					leadStory.image.src ? (
+						<img src={leadStory.image.src} alt={leadStory.image.alt} loading="lazy" decoding="async" />
+					) : (
+						<div class="gaming-image-placeholder" aria-hidden="true">
+							<span>Development image well</span>
+							<small>16:9 crop area</small>
+						</div>
+					)
+				}
+				{!leadStory.image.src && <figcaption>{leadStory.image.alt}</figcaption>}
+			</figure>
+
+			<div class="gaming-lead__copy">
+				<p class="story-kicker">Lead story</p>
+				<h3 id="gaming-lead-headline">
+					{leadStory.href ? <a href={leadStory.href}>{leadStory.headline}</a> : leadStory.headline}
+				</h3>
+				{leadStory.dek && <p class="gaming-lead__dek">{leadStory.dek}</p>}
+				<footer class="story-metadata" aria-label="Story details">
+					<span>By {leadStory.author}</span>
+					<span>
+						{
+							leadStory.publicationDatetime ? (
+								<time datetime={leadStory.publicationDatetime}>{leadStory.publicationDate}</time>
+							) : (
+								leadStory.publicationDate
+							)
+						}
+					</span>
+					<span>{leadStory.readTime}</span>
+				</footer>
+			</div>
+		</article>
+
+		<div class="gaming-support" aria-label="More from Gaming">
+			{
+				supportingStories.map((story, index) => (
+					<article class="gaming-support__story" aria-labelledby={`gaming-support-headline-${index}`}>
+						<div class="gaming-support__labels">
+							<p class="story-kicker">{story.type === 'review' ? 'Review layout sample' : 'More Gaming'}</p>
+						</div>
+						<h3 id={`gaming-support-headline-${index}`}>
+							{story.href ? <a href={story.href}>{story.headline}</a> : story.headline}
+						</h3>
+						{story.dek && <p class="gaming-support__dek">{story.dek}</p>}
+						<footer class="story-metadata" aria-label="Story details">
+							<span>By {story.author}</span>
+							<span>
+								{
+									story.publicationDatetime ? (
+										<time datetime={story.publicationDatetime}>{story.publicationDate}</time>
+									) : (
+										story.publicationDate
+									)
+								}
+							</span>
+							<span>{story.readTime}</span>
+						</footer>
+					</article>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.gaming-section {
+		margin-top: clamp(1.5rem, 2.8vw, 2.5rem);
+		background: var(--shell-surface);
+		border: 1px solid var(--shell-gray-200);
+	}
+
+	.gaming-section__header {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.5rem 1.5rem;
+		padding: 0.75rem 1rem;
+		background: var(--shell-navy-900);
+		color: #fff;
+		border-bottom: 0.3rem solid var(--shell-blue-700);
+	}
+
+	.gaming-section__header h2 {
+		margin: 0;
+		font-family: Georgia, 'Times New Roman', serif;
+		font-size: 1.75rem;
+		line-height: 1;
+	}
+
+	.gaming-section__header p {
+		margin: 0;
+		color: rgba(255, 255, 255, 0.68);
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.07em;
+		line-height: 1.3;
+		text-transform: uppercase;
+	}
+
+	.gaming-section__stories {
+		display: grid;
+		grid-template-columns: minmax(0, 1.25fr) minmax(17rem, 0.9fr);
+	}
+
+	.gaming-lead {
+		min-width: 0;
+		padding: 1rem;
+		border-right: 1px solid var(--shell-gray-200);
+	}
+
+	.gaming-lead__media {
+		margin: 0;
+	}
+
+	.gaming-lead__media img,
+	.gaming-image-placeholder {
+		display: block;
+		width: 100%;
+		aspect-ratio: 16 / 9;
+		object-fit: cover;
+	}
+
+	.gaming-image-placeholder {
+		display: grid;
+		place-content: center;
+		gap: 0.1rem;
+		padding: 1rem;
+		background: #d7dcde;
+		border: 1px dashed #89969e;
+		color: #4b5962;
+		text-align: center;
+	}
+
+	.gaming-image-placeholder span {
+		font-size: 0.9rem;
+		font-weight: 700;
+		letter-spacing: 0.035em;
+	}
+
+	.gaming-image-placeholder small,
+	.gaming-lead__media figcaption {
+		font-size: 0.76rem;
+	}
+
+	.gaming-lead__media figcaption {
+		margin-top: 0.45rem;
+		color: var(--shell-gray-500);
+		line-height: 1.4;
+	}
+
+	.gaming-lead__copy {
+		padding-top: 1rem;
+	}
+
+	.story-kicker {
+		margin: 0;
+		color: var(--shell-blue-700);
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.085em;
+		line-height: 1.3;
+		text-transform: uppercase;
+	}
+
+	.gaming-lead h3,
+	.gaming-support h3 {
+		font-family: Georgia, 'Times New Roman', serif;
+		letter-spacing: -0.02em;
+	}
+
+	.gaming-lead h3 {
+		max-width: 18ch;
+		margin: 0.4rem 0 0;
+		font-size: clamp(1.65rem, 2.4vw, 2.35rem);
+		line-height: 1.06;
+	}
+
+	.gaming-lead__dek {
+		margin: 0.75rem 0 0;
+		color: #46525c;
+		font-size: 0.98rem;
+		line-height: 1.5;
+	}
+
+	.gaming-support {
+		min-width: 0;
+		padding-inline: 1rem;
+		background: #f2f3f2;
+	}
+
+	.gaming-support__story {
+		padding-block: 1.1rem;
+	}
+
+	.gaming-support__story + .gaming-support__story {
+		border-top: 1px solid var(--shell-gray-200);
+	}
+
+	.gaming-support h3 {
+		margin: 0.35rem 0 0;
+		font-size: 1.35rem;
+		line-height: 1.12;
+	}
+
+	.gaming-support__dek {
+		margin: 0.55rem 0 0;
+		color: #4d5962;
+		font-size: 0.9rem;
+		line-height: 1.45;
+	}
+
+	.gaming-lead h3 a,
+	.gaming-support h3 a {
+		text-decoration-color: transparent;
+		text-decoration-thickness: 0.08em;
+		text-underline-offset: 0.12em;
+	}
+
+	.gaming-lead h3 a:hover,
+	.gaming-support h3 a:hover {
+		text-decoration-color: var(--shell-blue-700);
+	}
+
+	.gaming-lead h3 a:focus-visible,
+	.gaming-support h3 a:focus-visible {
+		outline: 0.18rem solid var(--shell-blue-700);
+		outline-offset: 0.18rem;
+	}
+
+	.story-metadata {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.3rem 0;
+		margin-top: 0.85rem;
+		color: #59656e;
+		font-size: 0.76rem;
+		line-height: 1.4;
+	}
+
+	.story-metadata span {
+		display: inline-flex;
+		align-items: center;
+	}
+
+	.story-metadata span + span::before {
+		content: '';
+		width: 0.2rem;
+		height: 0.2rem;
+		margin-inline: 0.45rem;
+		background: var(--shell-blue-700);
+		border-radius: 50%;
+	}
+
+	@media (max-width: 75rem) {
+		.gaming-section__stories {
+			grid-template-columns: 1fr;
+		}
+
+		.gaming-lead {
+			border-right: 0;
+			border-bottom: 1px solid var(--shell-gray-200);
+		}
+	}
+
+	@media (max-width: 46rem) {
+		.gaming-section__header {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+
+		.gaming-section__header h2 {
+			font-size: 1.55rem;
+		}
+
+		.gaming-lead {
+			padding: 0.75rem;
+		}
+
+		.gaming-lead h3 {
+			font-size: clamp(1.55rem, 7.2vw, 2rem);
+			line-height: 1.08;
+		}
+
+		.gaming-support {
+			padding-inline: 0.9rem;
+		}
+
+		.gaming-support h3 {
+			font-size: 1.25rem;
+		}
+	}
+</style>

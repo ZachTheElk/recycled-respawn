@@ -158,14 +158,6 @@ a {
 	padding: clamp(1rem, 3vw, 2.5rem);
 }
 
-.shell-panel {
-	min-height: 27rem;
-	padding: clamp(1.25rem, 3vw, 2.25rem);
-	background: var(--shell-surface);
-	border: 1px solid var(--shell-gray-200);
-	border-top: 0.35rem solid var(--shell-blue-700);
-}
-
 .panel-label {
 	margin: 0 0 0.7rem;
 	color: var(--shell-blue-700);
@@ -176,24 +168,10 @@ a {
 	text-transform: uppercase;
 }
 
-.shell-panel h1,
 .rail-placeholder h2 {
 	margin: 0;
 	font-family: Georgia, 'Times New Roman', serif;
 	line-height: 1.08;
-}
-
-.shell-panel h1 {
-	max-width: 15ch;
-	font-size: clamp(2rem, 5vw, 4.5rem);
-	letter-spacing: -0.035em;
-}
-
-.shell-panel > p:last-child {
-	max-width: 42rem;
-	margin: 1.3rem 0 0;
-	color: #46525c;
-	font-size: 1.05rem;
 }
 
 .right-rail {
@@ -297,10 +275,6 @@ a {
 	.main-region,
 	.right-rail {
 		padding: 1rem;
-	}
-
-	.shell-panel {
-		min-height: 21rem;
 	}
 
 	.right-rail {

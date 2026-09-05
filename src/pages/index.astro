@@ -1,5 +1,20 @@
 ---
+import FeaturedStory from '../components/FeaturedStory.astro';
 import Layout from '../layouts/Layout.astro';
+
+// Development-only sample data. Replace with approved editorial content in a later task.
+const featuredStory = {
+	section: 'Gaming',
+	headline: 'When a Familiar Game Becomes a Place Worth Returning To',
+	dek: 'A layout test exploring how memory, routine, and changing player expectations can reshape the way an old favorite feels years later.',
+	author: 'Development sample — not ZachTheElk',
+	publicationDate: 'Sample date: September 5, 2026',
+	readTime: '6 min read sample',
+	image: {
+		alt: 'Development-only image placeholder; final editorial image has not been selected.',
+	},
+	developmentOnly: true,
+};
 ---
 
 <Layout>
@@ -25,14 +40,7 @@ import Layout from '../layouts/Layout.astro';
 
 		<div class="publication-grid">
 			<main class="main-region" id="main-content" tabindex="-1">
-				<section class="shell-panel" aria-labelledby="main-region-title">
-					<p class="panel-label">Main publication region</p>
-					<h1 id="main-region-title">Recycled Respawn is taking shape.</h1>
-					<p>
-						This space will hold the publication's primary editorial modules. It is intentionally
-						unpopulated while the site structure is established.
-					</p>
-				</section>
+				<FeaturedStory {...featuredStory} />
 			</main>
 
 			<aside class="right-rail" aria-labelledby="right-rail-title">

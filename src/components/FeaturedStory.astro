@@ -1,0 +1,271 @@
+---
+interface EditorialImage {
+	src?: string;
+	alt: string;
+}
+
+interface Props {
+	section: string;
+	headline: string;
+	dek: string;
+	author: string;
+	publicationDate: string;
+	publicationDatetime?: string;
+	readTime: string;
+	href?: string;
+	image: EditorialImage;
+	developmentOnly?: boolean;
+}
+
+const {
+	section,
+	headline,
+	dek,
+	author,
+	publicationDate,
+	publicationDatetime,
+	readTime,
+	href,
+	image,
+	developmentOnly = false,
+} = Astro.props;
+---
+
+<article class="featured-story" aria-labelledby="featured-story-headline">
+	<header class="featured-story__header">
+		<p class="featured-story__position">Featured Story</p>
+		{
+			developmentOnly && (
+				<p class="featured-story__development-note">Development-only layout sample</p>
+			)
+		}
+	</header>
+
+	<div class="featured-story__body">
+		<figure class="featured-story__media">
+			{
+				image.src ? (
+					<img src={image.src} alt={image.alt} loading="eager" decoding="async" fetchpriority="high" />
+				) : (
+					<div class="featured-story__image-placeholder" aria-hidden="true">
+						<span>Development image well</span>
+						<small>16:9 crop area</small>
+					</div>
+				)
+			}
+			{!image.src && <figcaption>{image.alt}</figcaption>}
+		</figure>
+
+		<div class="featured-story__copy">
+			<p class="featured-story__section">{section}</p>
+			<h1 id="featured-story-headline">
+				{href ? <a href={href}>{headline}</a> : headline}
+			</h1>
+			<p class="featured-story__dek">{dek}</p>
+
+			<footer class="featured-story__metadata" aria-label="Story details">
+				<span>By {author}</span>
+				<span>
+					{
+						publicationDatetime ? (
+							<time datetime={publicationDatetime}>{publicationDate}</time>
+						) : (
+							publicationDate
+						)
+					}
+				</span>
+				<span>{readTime}</span>
+			</footer>
+		</div>
+	</div>
+</article>
+
+<style>
+	.featured-story {
+		background: var(--shell-surface);
+		border: 1px solid var(--shell-gray-200);
+		border-top: 0.35rem solid var(--shell-blue-700);
+	}
+
+	.featured-story__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem 1.5rem;
+		min-height: 2.8rem;
+		padding: 0.55rem 1rem;
+		border-bottom: 1px solid var(--shell-gray-200);
+	}
+
+	.featured-story__position,
+	.featured-story__development-note,
+	.featured-story__section {
+		margin: 0;
+		font-size: 0.8rem;
+		font-weight: 700;
+		letter-spacing: 0.09em;
+		line-height: 1.3;
+		text-transform: uppercase;
+	}
+
+	.featured-story__position,
+	.featured-story__section {
+		color: var(--shell-blue-700);
+	}
+
+	.featured-story__development-note {
+		color: var(--shell-gray-500);
+		font-size: 0.75rem;
+		letter-spacing: 0.06em;
+	}
+
+	.featured-story__body {
+		display: grid;
+		grid-template-columns: minmax(0, 1.35fr) minmax(17rem, 0.9fr);
+		align-items: stretch;
+	}
+
+	.featured-story__media {
+		min-width: 0;
+		margin: 0;
+		padding: 1rem;
+		background: #e4e8e9;
+		border-right: 1px solid var(--shell-gray-200);
+	}
+
+	.featured-story__media img,
+	.featured-story__image-placeholder {
+		display: block;
+		width: 100%;
+		aspect-ratio: 16 / 9;
+		object-fit: cover;
+	}
+
+	.featured-story__image-placeholder {
+		display: grid;
+		place-content: center;
+		gap: 0.15rem;
+		padding: 1rem;
+		background:
+			linear-gradient(135deg, rgba(36, 85, 125, 0.08), rgba(8, 19, 31, 0.16)),
+			#cbd2d5;
+		border: 1px dashed #89969e;
+		color: #44535d;
+		text-align: center;
+	}
+
+	.featured-story__image-placeholder span {
+		font-weight: 700;
+		letter-spacing: 0.04em;
+	}
+
+	.featured-story__image-placeholder small {
+		font-size: 0.8rem;
+	}
+
+	.featured-story__media figcaption {
+		margin-top: 0.55rem;
+		color: var(--shell-gray-500);
+		font-size: 0.8rem;
+		line-height: 1.4;
+	}
+
+	.featured-story__copy {
+		display: flex;
+		flex-direction: column;
+		padding: clamp(1.25rem, 2.4vw, 2rem);
+	}
+
+	.featured-story__copy h1 {
+		margin: 0.55rem 0 0;
+		font-family: Georgia, 'Times New Roman', serif;
+		font-size: clamp(2rem, 3.4vw, 3.35rem);
+		letter-spacing: -0.035em;
+		line-height: 1.03;
+	}
+
+	.featured-story__copy h1 a {
+		text-decoration-color: transparent;
+		text-decoration-thickness: 0.08em;
+		text-underline-offset: 0.12em;
+	}
+
+	.featured-story__copy h1 a:hover {
+		text-decoration-color: var(--shell-blue-700);
+	}
+
+	.featured-story__copy h1 a:focus-visible {
+		outline: 0.2rem solid var(--shell-blue-700);
+		outline-offset: 0.2rem;
+	}
+
+	.featured-story__dek {
+		margin: 1rem 0 0;
+		color: #46525c;
+		font-size: 1.05rem;
+		line-height: 1.55;
+	}
+
+	.featured-story__metadata {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem 0;
+		margin-top: auto;
+		padding-top: 1.5rem;
+		color: #56636d;
+		font-size: 0.82rem;
+		line-height: 1.4;
+	}
+
+	.featured-story__metadata span {
+		display: inline-flex;
+		align-items: center;
+	}
+
+	.featured-story__metadata span:not(:last-child)::after {
+		content: '';
+		width: 0.22rem;
+		height: 0.22rem;
+		margin-inline: 0.55rem;
+		background: var(--shell-blue-700);
+		border-radius: 50%;
+	}
+
+	@media (max-width: 75rem) {
+		.featured-story__body {
+			grid-template-columns: 1fr;
+		}
+
+		.featured-story__media {
+			border-right: 0;
+			border-bottom: 1px solid var(--shell-gray-200);
+		}
+
+		.featured-story__copy h1 {
+			max-width: 18ch;
+		}
+	}
+
+	@media (max-width: 46rem) {
+		.featured-story__header {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+
+		.featured-story__media {
+			padding: 0.75rem;
+		}
+
+		.featured-story__copy {
+			padding: 1.2rem;
+		}
+
+		.featured-story__copy h1 {
+			font-size: clamp(2rem, 10vw, 2.8rem);
+		}
+
+		.featured-story__metadata {
+			margin-top: 0;
+		}
+	}
+</style>

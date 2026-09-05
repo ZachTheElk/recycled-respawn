@@ -1,11 +1,52 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
-	<Welcome />
+	<a class="skip-link" href="#main-content">Skip to main content</a>
+
+	<div class="site-frame">
+		<header class="site-header">
+			<div class="masthead-row">
+				<div class="brand-mark-slot" aria-hidden="true"></div>
+				<a class="wordmark" href="/" aria-label="Recycled Respawn home">RECYCLED RESPAWN</a>
+			</div>
+
+			<div class="navigation-row">
+				<p class="navigation-label" id="primary-navigation-label">Sections</p>
+				<nav class="primary-navigation" aria-labelledby="primary-navigation-label">
+					<span aria-disabled="true" title="Section in development">Gaming</span>
+					<span aria-disabled="true" title="Section in development">Culture</span>
+					<span aria-disabled="true" title="Section in development">Features</span>
+				</nav>
+				<p class="navigation-status">Section pages are in development.</p>
+			</div>
+		</header>
+
+		<div class="publication-grid">
+			<main class="main-region" id="main-content" tabindex="-1">
+				<section class="shell-panel" aria-labelledby="main-region-title">
+					<p class="panel-label">Main publication region</p>
+					<h1 id="main-region-title">Recycled Respawn is taking shape.</h1>
+					<p>
+						This space will hold the publication's primary editorial modules. It is intentionally
+						unpopulated while the site structure is established.
+					</p>
+				</section>
+			</main>
+
+			<aside class="right-rail" aria-labelledby="right-rail-title">
+				<div class="rail-placeholder">
+					<p class="panel-label">Right rail</p>
+					<h2 id="right-rail-title">Supporting publication space</h2>
+					<p>Future modules will be defined separately.</p>
+				</div>
+			</aside>
+		</div>
+
+		<footer class="site-footer">
+			<p><strong>Recycled Respawn</strong></p>
+			<p>Independent gaming and culture publication.</p>
+		</footer>
+	</div>
 </Layout>

@@ -1,5 +1,6 @@
 ---
 import FeaturedStory from '../components/FeaturedStory.astro';
+import NewestColumn from '../components/NewestColumn.astro';
 import Layout from '../layouts/Layout.astro';
 
 // Development-only sample data. Replace with approved editorial content in a later task.
@@ -13,6 +14,18 @@ const featuredStory = {
 	image: {
 		alt: 'Development-only image placeholder; final editorial image has not been selected.',
 	},
+	developmentOnly: true,
+};
+
+// Development-only sample data. “Column” and “Opinion” remain provisional labels.
+const newestColumn = {
+	label: 'Newest Column',
+	section: 'Opinion',
+	headline: 'The Ritual of Choosing What to Play Is Half the Experience',
+	dek: 'A development-only layout sample about the anticipation, indecision, and small personal rituals that can matter as much as pressing Start.',
+	author: 'Development sample — not ZachTheElk',
+	publicationDate: 'Sample date: September 5, 2026',
+	readTime: '4 min read sample',
 	developmentOnly: true,
 };
 ---
@@ -41,6 +54,7 @@ const featuredStory = {
 		<div class="publication-grid">
 			<main class="main-region" id="main-content" tabindex="-1">
 				<FeaturedStory {...featuredStory} />
+				<NewestColumn {...newestColumn} />
 			</main>
 
 			<aside class="right-rail" aria-labelledby="right-rail-title">

@@ -1,0 +1,187 @@
+---
+interface Props {
+	label: string;
+	section: string;
+	headline: string;
+	dek?: string;
+	author: string;
+	publicationDate: string;
+	publicationDatetime?: string;
+	readTime: string;
+	href?: string;
+	developmentOnly?: boolean;
+}
+
+const {
+	label,
+	section,
+	headline,
+	dek,
+	author,
+	publicationDate,
+	publicationDatetime,
+	readTime,
+	href,
+	developmentOnly = false,
+} = Astro.props;
+---
+
+<article class="newest-column" aria-labelledby="newest-column-headline">
+	<header class="newest-column__marker">
+		<p class="newest-column__label">{label}</p>
+		<p class="newest-column__section">{section}</p>
+		{developmentOnly && <p class="newest-column__development-note">Development-only sample</p>}
+	</header>
+
+	<div class="newest-column__copy">
+		<h2 id="newest-column-headline">
+			{href ? <a href={href}>{headline}</a> : headline}
+		</h2>
+		{dek && <p class="newest-column__dek">{dek}</p>}
+
+		<footer class="newest-column__metadata" aria-label="Column details">
+			<span>By {author}</span>
+			<span>
+				{
+					publicationDatetime ? (
+						<time datetime={publicationDatetime}>{publicationDate}</time>
+					) : (
+						publicationDate
+					)
+				}
+			</span>
+			<span>{readTime}</span>
+		</footer>
+	</div>
+</article>
+
+<style>
+	.newest-column {
+		display: grid;
+		grid-template-columns: minmax(9rem, 0.65fr) minmax(0, 2.35fr);
+		margin-top: clamp(1.25rem, 2.2vw, 2rem);
+		background: var(--shell-surface);
+		border-block: 1px solid var(--shell-gray-200);
+		border-left: 0.35rem solid var(--shell-blue-700);
+	}
+
+	.newest-column__marker {
+		padding: 1.15rem;
+		background: #e4e8e9;
+		border-right: 1px solid var(--shell-gray-200);
+	}
+
+	.newest-column__label,
+	.newest-column__section,
+	.newest-column__development-note {
+		margin: 0;
+		font-size: 0.78rem;
+		font-weight: 700;
+		letter-spacing: 0.09em;
+		line-height: 1.35;
+		text-transform: uppercase;
+	}
+
+	.newest-column__label {
+		color: var(--shell-blue-700);
+	}
+
+	.newest-column__section {
+		margin-top: 0.45rem;
+		color: var(--shell-navy-900);
+	}
+
+	.newest-column__development-note {
+		margin-top: 1.8rem;
+		color: var(--shell-gray-500);
+		font-size: 0.7rem;
+		letter-spacing: 0.05em;
+	}
+
+	.newest-column__copy {
+		padding: clamp(1.25rem, 2.4vw, 2rem);
+	}
+
+	.newest-column__copy h2 {
+		max-width: 19ch;
+		margin: 0;
+		font-family: Georgia, 'Times New Roman', serif;
+		font-size: clamp(1.8rem, 2.7vw, 2.65rem);
+		letter-spacing: -0.025em;
+		line-height: 1.06;
+	}
+
+	.newest-column__copy h2 a {
+		text-decoration-color: transparent;
+		text-decoration-thickness: 0.08em;
+		text-underline-offset: 0.12em;
+	}
+
+	.newest-column__copy h2 a:hover {
+		text-decoration-color: var(--shell-blue-700);
+	}
+
+	.newest-column__copy h2 a:focus-visible {
+		outline: 0.2rem solid var(--shell-blue-700);
+		outline-offset: 0.2rem;
+	}
+
+	.newest-column__dek {
+		max-width: 43rem;
+		margin: 0.85rem 0 0;
+		color: #46525c;
+		font-size: 1rem;
+		line-height: 1.55;
+	}
+
+	.newest-column__metadata {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem 0;
+		margin-top: 1.25rem;
+		color: #56636d;
+		font-size: 0.82rem;
+		line-height: 1.4;
+	}
+
+	.newest-column__metadata span {
+		display: inline-flex;
+		align-items: center;
+	}
+
+	.newest-column__metadata span + span::before {
+		content: '';
+		width: 0.22rem;
+		height: 0.22rem;
+		margin-inline: 0.55rem;
+		background: var(--shell-blue-700);
+		border-radius: 50%;
+	}
+
+	@media (max-width: 46rem) {
+		.newest-column {
+			grid-template-columns: 1fr;
+		}
+
+		.newest-column__marker {
+			padding: 0.8rem 1.2rem;
+			border-right: 0;
+			border-bottom: 1px solid var(--shell-gray-200);
+		}
+
+		.newest-column__section,
+		.newest-column__development-note {
+			display: inline-block;
+			margin-top: 0.35rem;
+			margin-right: 1rem;
+		}
+
+		.newest-column__copy {
+			padding: 1.2rem;
+		}
+
+		.newest-column__copy h2 {
+			font-size: clamp(1.8rem, 9vw, 2.4rem);
+		}
+	}
+</style>

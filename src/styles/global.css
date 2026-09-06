@@ -109,8 +109,7 @@ a {
 }
 
 .navigation-label,
-.navigation-status,
-.primary-navigation span {
+.primary-navigation a {
 	margin: 0;
 	padding: 0.72rem 1rem;
 }
@@ -130,20 +129,24 @@ a {
 	align-items: stretch;
 }
 
-.primary-navigation span {
+.primary-navigation a {
 	display: flex;
 	align-items: center;
 	border-right: 1px solid rgba(255, 255, 255, 0.12);
 	font-weight: 700;
 	line-height: 1;
-	cursor: not-allowed;
+	text-decoration: none;
 }
 
-.navigation-status {
-	align-self: center;
-	margin-left: auto;
-	color: rgba(255, 255, 255, 0.7);
-	font-size: 0.8rem;
+.primary-navigation a:hover {
+	background: rgba(255, 255, 255, 0.08);
+}
+
+.primary-navigation a:focus-visible {
+	position: relative;
+	z-index: 1;
+	outline: 0.2rem solid #fff;
+	outline-offset: -0.2rem;
 }
 
 .publication-grid {
@@ -222,10 +225,6 @@ a {
 		border-inline: 0;
 	}
 
-	.navigation-status {
-		display: none;
-	}
-
 	.publication-grid {
 		grid-template-columns: minmax(0, 1fr) minmax(16rem, 19rem);
 	}
@@ -244,13 +243,6 @@ a {
 		display: block;
 	}
 
-	.navigation-status {
-		display: block;
-		margin-left: 0;
-		padding-block: 0.5rem;
-		border-top: 1px solid rgba(255, 255, 255, 0.12);
-	}
-
 	.navigation-label {
 		padding-block: 0.45rem;
 	}
@@ -260,7 +252,7 @@ a {
 		grid-template-columns: repeat(3, 1fr);
 	}
 
-	.primary-navigation span {
+	.primary-navigation a {
 		justify-content: center;
 		padding-inline: 0.5rem;
 		border-top: 1px solid rgba(255, 255, 255, 0.12);

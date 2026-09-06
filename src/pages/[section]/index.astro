@@ -1,0 +1,295 @@
+---
+import { getCollection } from 'astro:content';
+import SiteFooter from '../../components/SiteFooter.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import { DEVELOPMENT_FIXTURE_ID } from '../../data/content-foundation';
+import Layout from '../../layouts/Layout.astro';
+import {
+	ARTICLE_SECTIONS,
+	estimateReadTime,
+	formatArticleDate,
+	getArticleUrl,
+	getSectionArticles,
+	type ArticleEntry,
+	type ArticleSection,
+} from '../../lib/articles';
+
+const sectionDetails: Record<ArticleSection, { title: string; description: string; emptyMessage: string }> = {
+	gaming: {
+		title: 'Gaming',
+		description: 'Criticism, reviews, systems analysis, and perspectives on the games we play.',
+		emptyMessage: 'Gaming stories will appear here as they are published.',
+	},
+	culture: {
+		title: 'Culture',
+		description: 'Writing about media, technology, internet culture, and the habits that grow around them.',
+		emptyMessage: 'Culture stories will appear here as they are published.',
+	},
+	features: {
+		title: 'Features',
+		description: 'Thesis-led essays, deep dives, historical threads, and close examinations of how things work.',
+		emptyMessage: 'Features will appear here as they are published.',
+	},
+};
+
+export async function getStaticPaths() {
+	const allArticles = await getCollection('articles');
+
+	return ARTICLE_SECTIONS.map((section) => {
+		const publishedArticles = getSectionArticles(allArticles, section);
+		const reviewFixture =
+			section === 'features'
+				? allArticles.filter((article) => article.id === DEVELOPMENT_FIXTURE_ID)
+				: [];
+
+		return {
+			params: { section },
+			props: { section, articles: [...reviewFixture, ...publishedArticles] },
+		};
+	});
+}
+
+interface Props {
+	section: ArticleSection;
+	articles: ArticleEntry[];
+}
+
+const { section, articles } = Astro.props;
+const details = sectionDetails[section];
+const canonicalUrl = new URL(`/${section}/`, Astro.site);
+---
+
+<Layout
+	title={`${details.title} | Recycled Respawn`}
+	description={details.description}
+	canonicalUrl={canonicalUrl}
+>
+	<a class="skip-link" href="#section-content">Skip to section stories</a>
+
+	<div class="site-frame">
+		<SiteHeader />
+
+		<main class="section-page" id="section-content" tabindex="-1">
+			<header class="section-page__header">
+				<p class="section-page__eyebrow">Section</p>
+				<h1>{details.title}</h1>
+				<p>{details.description}</p>
+			</header>
+
+			<section class="section-listing" aria-labelledby="section-listing-title">
+				<h2 id="section-listing-title">Latest in {details.title}</h2>
+
+				{articles.length > 0 ? (
+					<ol class="story-list">
+						{articles.map((article, index) => {
+							const isDevelopmentFixture = article.id === DEVELOPMENT_FIXTURE_ID;
+							return (
+								<li>
+									<article class="story-entry">
+										<div class="story-entry__number" aria-hidden="true">
+											{String(index + 1).padStart(2, '0')}
+										</div>
+										<div>
+											<p class:list={['story-entry__label', { 'story-entry__label--fixture': isDevelopmentFixture }]}>
+												{isDevelopmentFixture ? 'Development-only fixture' : article.data.formatLabel ?? article.data.type}
+											</p>
+											<h3><a href={getArticleUrl(article)}>{article.data.title}</a></h3>
+											<p class="story-entry__dek">{article.data.dek}</p>
+											<div class="story-entry__metadata" aria-label="Article details">
+												<span>By {article.data.author}</span>
+												<time datetime={article.data.publishedAt.toISOString()}>
+													{isDevelopmentFixture ? 'Fixture date: ' : ''}{formatArticleDate(article.data.publishedAt)}
+												</time>
+												<span>{estimateReadTime(article.body ?? '')} min read</span>
+											</div>
+										</div>
+									</article>
+								</li>
+							);
+						})}
+					</ol>
+				) : (
+					<p class="section-empty">{details.emptyMessage}</p>
+				)}
+			</section>
+		</main>
+
+		<SiteFooter />
+	</div>
+</Layout>
+
+<style>
+	.section-page {
+		padding: clamp(1rem, 4vw, 3.5rem);
+	}
+
+	.section-page__header,
+	.section-listing {
+		max-width: 72rem;
+		margin-inline: auto;
+	}
+
+	.section-page__header {
+		padding: clamp(1.25rem, 3.5vw, 2.75rem);
+		background: var(--shell-surface);
+		border: 1px solid var(--shell-gray-200);
+		border-top: 0.4rem solid var(--shell-blue-700);
+	}
+
+	.section-page__eyebrow {
+		margin: 0;
+		color: var(--shell-blue-700);
+		font-size: 0.76rem;
+		font-weight: 700;
+		letter-spacing: 0.09em;
+		line-height: 1.3;
+		text-transform: uppercase;
+	}
+
+	.section-page__header h1 {
+		margin: 0.3rem 0 0;
+		font-family: Georgia, 'Times New Roman', serif;
+		font-size: clamp(2.75rem, 7vw, 5.75rem);
+		letter-spacing: -0.045em;
+		line-height: 0.95;
+	}
+
+	.section-page__header > p:last-child {
+		max-width: 44rem;
+		margin: 0.9rem 0 0;
+		color: #46525c;
+		font-size: clamp(1rem, 1.8vw, 1.18rem);
+		line-height: 1.5;
+	}
+
+	.section-listing {
+		margin-top: 1.25rem;
+		background: var(--shell-surface);
+		border: 1px solid var(--shell-gray-200);
+	}
+
+	.section-listing > h2 {
+		margin: 0;
+		padding: 0.75rem clamp(1rem, 2.8vw, 1.75rem);
+		background: #e4e8e9;
+		border-bottom: 1px solid var(--shell-gray-200);
+		font-size: 0.78rem;
+		letter-spacing: 0.09em;
+		line-height: 1.3;
+		text-transform: uppercase;
+	}
+
+	.story-list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.story-list > li + li {
+		border-top: 1px solid var(--shell-gray-200);
+	}
+
+	.story-entry {
+		display: grid;
+		grid-template-columns: 3.25rem minmax(0, 1fr);
+		gap: clamp(0.9rem, 2.5vw, 1.5rem);
+		padding: clamp(1.1rem, 3vw, 2rem) clamp(1rem, 2.8vw, 1.75rem);
+	}
+
+	.story-entry__number {
+		color: var(--shell-blue-500);
+		font-size: 0.82rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+	}
+
+	.story-entry__label {
+		margin: 0;
+		color: var(--shell-blue-700);
+		font-size: 0.73rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		line-height: 1.3;
+		text-transform: uppercase;
+	}
+
+	.story-entry__label--fixture {
+		color: #58636b;
+	}
+
+	.story-entry h3 {
+		max-width: 30ch;
+		margin: 0.35rem 0 0;
+		font-family: Georgia, 'Times New Roman', serif;
+		font-size: clamp(1.55rem, 3vw, 2.35rem);
+		letter-spacing: -0.025em;
+		line-height: 1.05;
+	}
+
+	.story-entry h3 a {
+		text-decoration-color: transparent;
+		text-decoration-thickness: 0.08em;
+		text-underline-offset: 0.12em;
+	}
+
+	.story-entry h3 a:hover {
+		text-decoration-color: var(--shell-blue-500);
+	}
+
+	.story-entry h3 a:focus-visible {
+		outline: 0.2rem solid var(--shell-blue-700);
+		outline-offset: 0.2rem;
+	}
+
+	.story-entry__dek {
+		max-width: 48rem;
+		margin: 0.65rem 0 0;
+		color: #46525c;
+		line-height: 1.55;
+	}
+
+	.story-entry__metadata {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem 0;
+		margin-top: 0.85rem;
+		color: var(--shell-gray-500);
+		font-size: 0.78rem;
+	}
+
+	.story-entry__metadata > * + *::before {
+		content: '';
+		display: inline-block;
+		width: 0.2rem;
+		height: 0.2rem;
+		margin: 0 0.5rem 0.15rem;
+		background: var(--shell-blue-700);
+		border-radius: 50%;
+	}
+
+	.section-empty {
+		margin: 0;
+		padding: 1.4rem clamp(1rem, 2.8vw, 1.75rem);
+		color: var(--shell-gray-500);
+	}
+
+	@media (max-width: 36rem) {
+		.section-page {
+			padding: 1rem;
+		}
+
+		.story-entry {
+			grid-template-columns: 2rem minmax(0, 1fr);
+			gap: 0.6rem;
+		}
+
+		.story-entry__metadata {
+			display: grid;
+			gap: 0.15rem;
+		}
+
+		.story-entry__metadata > * + *::before {
+			display: none;
+		}
+	}
+</style>

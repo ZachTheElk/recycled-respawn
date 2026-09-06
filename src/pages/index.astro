@@ -2,6 +2,7 @@
 import FeaturedStory from '../components/FeaturedStory.astro';
 import GamingSection from '../components/GamingSection.astro';
 import CultureSection from '../components/CultureSection.astro';
+import FeaturesSection from '../components/FeaturesSection.astro';
 import NewestColumn from '../components/NewestColumn.astro';
 import Layout from '../layouts/Layout.astro';
 
@@ -106,6 +107,40 @@ const cultureSection = {
 	],
 	developmentOnly: true,
 };
+
+// Development-only Features samples for testing a thesis-led, long-form hierarchy.
+const featuresSection = {
+	primaryStory: {
+		label: 'Design analysis',
+		headline: 'What a Game Teaches Us Before It Explains a Single Rule',
+		dek: 'A development-only layout sample following the quiet ways spaces, consequences, and repeated choices can teach a system more effectively than instructions do.',
+		author: 'Development sample — not ZachTheElk',
+		publicationDate: 'Sample date: September 6, 2026',
+		readTime: '12 min read sample',
+	},
+	secondaryStories: [
+		{
+			label: 'Historical thread',
+			headline: 'The Interface Ideas That Survived Their Original Hardware',
+			dek: 'Development-only copy testing an evergreen feature with a restrained supporting image.',
+			author: 'Development sample — not ZachTheElk',
+			publicationDate: 'Sample date: September 6, 2026',
+			readTime: '9 min read sample',
+			image: {
+				alt: 'Development-only Features image placeholder; no editorial image has been selected.',
+			},
+		},
+		{
+			label: 'Essay',
+			headline: 'Why Useful Friction Can Make a Digital Place Feel Real',
+			dek: 'A development-only sample about the difference between an obstacle and a system that gives decisions weight.',
+			author: 'Development sample — not ZachTheElk',
+			publicationDate: 'Sample date: September 6, 2026',
+			readTime: '8 min read sample',
+		},
+	],
+	developmentOnly: true,
+};
 ---
 
 <Layout>
@@ -135,6 +170,7 @@ const cultureSection = {
 				<NewestColumn {...newestColumn} />
 				<GamingSection {...gamingSection} />
 				<CultureSection {...cultureSection} />
+				<FeaturesSection {...featuresSection} />
 			</main>
 
 			<aside class="right-rail" aria-labelledby="right-rail-title">

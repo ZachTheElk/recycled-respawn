@@ -5,6 +5,44 @@ export type ArticleEntry = CollectionEntry<'articles'>;
 export const ARTICLE_SECTIONS = ['gaming', 'culture', 'features'] as const;
 export type ArticleSection = (typeof ARTICLE_SECTIONS)[number];
 
+export type ArticleType = ArticleEntry['data']['type'];
+
+export interface StoryImage {
+	src?: string;
+	alt: string;
+}
+
+export interface NormalizedStory {
+	id: string;
+	section: ArticleSection;
+	displaySection: string;
+	type: ArticleType;
+	formatLabel?: string;
+	headline: string;
+	dek?: string;
+	author: string;
+	publicationDate: string;
+	publicationDatetime: string;
+	readTime: string;
+	// null explicitly identifies development records that have no public article route.
+	href: string | null;
+	image?: StoryImage;
+	developmentOnly: boolean;
+}
+
+export interface HomepageDevelopmentRecord {
+	id: string;
+	section: ArticleSection;
+	type: ArticleType;
+	formatLabel?: string;
+	title: string;
+	dek?: string;
+	author: 'Development sample — not ZachTheElk';
+	publishedAt: Date;
+	readTimeMinutes: number;
+	image?: StoryImage;
+}
+
 export function getArticleUrl(article: Pick<ArticleEntry, 'id' | 'data'>) {
 	return `/${article.data.section}/${article.id}/`;
 }
@@ -40,4 +78,8 @@ export function formatArticleDate(date: Date) {
 		year: 'numeric',
 		timeZone: 'America/New_York',
 	}).format(date);
+}
+
+export function formatArticleSection(section: ArticleSection) {
+	return section.charAt(0).toUpperCase() + section.slice(1);
 }

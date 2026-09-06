@@ -6,176 +6,57 @@ import FeaturesSection from '../components/FeaturesSection.astro';
 import NewestColumn from '../components/NewestColumn.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
-import { getEntry } from 'astro:content';
-import { homepageCuration } from '../data/homepage';
+import { getHomepageStories } from '../data/homepage';
 import Layout from '../layouts/Layout.astro';
-import { estimateReadTime, formatArticleDate, getArticleUrl } from '../lib/articles';
 
-const featuredEntry = await getEntry('articles', homepageCuration.featuredStory);
+const { featuredStory, newestColumn, gamingSection, cultureSection, featuresSection } = await getHomepageStories();
 
-if (!featuredEntry) {
-	throw new Error(`Homepage Featured Story not found: ${homepageCuration.featuredStory}`);
-}
-
-// One collection-backed slot proves the content path; all other homepage samples remain unchanged.
-const featuredStory = {
-	section: featuredEntry.data.section.charAt(0).toUpperCase() + featuredEntry.data.section.slice(1),
-	headline: featuredEntry.data.title,
-	dek: featuredEntry.data.dek,
-	author: featuredEntry.data.author,
-	publicationDate: `Development fixture date: ${formatArticleDate(featuredEntry.data.publishedAt)}`,
-	publicationDatetime: featuredEntry.data.publishedAt.toISOString(),
-	readTime: `${estimateReadTime(featuredEntry.body ?? '')} min read fixture`,
-	href: getArticleUrl(featuredEntry),
-	image: featuredEntry.data.hero
-		? {
-				src: featuredEntry.data.hero.image.src,
-				alt: featuredEntry.data.hero.alt,
-			}
-		: {
-				alt: 'Development-only image placeholder; final editorial image has not been selected.',
-			},
-	developmentOnly: true,
+const featuredProps = {
+	...featuredStory,
+	section: featuredStory.displaySection,
+	image: featuredStory.image ?? { alt: 'Development-only image placeholder; final editorial image has not been selected.' },
 };
 
-// Development-only sample data. “Column” and “Opinion” remain provisional labels.
-const newestColumn = {
-	label: 'Newest Column',
-	section: 'Opinion',
-	headline: 'The Ritual of Choosing What to Play Is Half the Experience',
-	dek: 'A development-only layout sample about the anticipation, indecision, and small personal rituals that can matter as much as pressing Start.',
-	author: 'Development sample — not ZachTheElk',
-	publicationDate: 'Sample date: September 5, 2026',
-	readTime: '4 min read sample',
-	developmentOnly: true,
-};
+const columnProps = { ...newestColumn, label: 'Newest Column', section: newestColumn.formatLabel ?? 'Opinion' };
 
-// Development-only Gaming samples for testing section hierarchy and density.
-const gamingSection = {
+const gamingProps = {
+	...gamingSection,
 	leadStory: {
-		headline: 'What Changes When a Familiar World Stops Asking You to Hurry',
-		dek: 'A layout sample considering how slower goals and repeated routes can turn progress into a different kind of play.',
-		author: 'Development sample — not ZachTheElk',
-		publicationDate: 'Sample date: September 5, 2026',
-		readTime: '7 min read sample',
-		image: {
-			alt: 'Development-only Gaming image placeholder; no editorial image has been selected.',
-		},
+		...gamingSection.leadStory,
+		image: gamingSection.leadStory.image ?? { alt: 'Development-only Gaming image placeholder; no editorial image has been selected.' },
 	},
-	supportingStories: [
-		{
-			headline: 'A Good Map Can Be More Memorable Than the Destination',
-			dek: 'Development-only copy for testing a compact supporting story with a short excerpt.',
-			author: 'Development sample — not ZachTheElk',
-			publicationDate: 'Sample date: September 5, 2026',
-			readTime: '5 min read sample',
-		},
-		{
-			headline: 'Testing How Reviews Fit Without Turning Into Scores',
-			author: 'Development sample — not ZachTheElk',
-			publicationDate: 'Sample date: September 5, 2026',
-			readTime: '8 min read sample',
-			type: 'review' as const,
-		},
-		{
-			headline: 'The Small Interface Detail That Changes an Entire Routine',
-			author: 'Development sample — not ZachTheElk',
-			publicationDate: 'Sample date: September 5, 2026',
-			readTime: '4 min read sample',
-		},
-	],
 	developmentOnly: true,
 };
 
-// Development-only Culture samples for testing a distinct editorial rhythm.
-const cultureSection = {
+const cultureProps = {
+	...cultureSection,
 	leadStory: {
-		headline: 'When the Interface Becomes Part of the Memory',
-		dek: 'A development-only layout sample about the menus, sounds, and small digital rituals that linger after the technology itself changes.',
-		author: 'Development sample — not ZachTheElk',
-		publicationDate: 'Sample date: September 6, 2026',
-		readTime: '6 min read sample',
-		image: {
-			alt: 'Development-only Culture image placeholder; no editorial image has been selected.',
-		},
+		...cultureSection.leadStory,
+		image: cultureSection.leadStory.image ?? { alt: 'Development-only Culture image placeholder; no editorial image has been selected.' },
 	},
-	briefs: [
-		{
-			label: 'Media note',
-			headline: 'The Comfort of Knowing Exactly When to Skip the Intro',
-			dek: 'Development-only copy testing one compact Culture item with supporting context.',
-			author: 'Development sample — not ZachTheElk',
-			publicationDate: 'Sample date: September 6, 2026',
-			readTime: '4 min read sample',
-		},
-		{
-			label: 'Internet culture',
-			headline: 'A Community Archive Can Outlast the Platform That Needed It',
-			author: 'Development sample — not ZachTheElk',
-			publicationDate: 'Sample date: September 6, 2026',
-			readTime: '5 min read sample',
-		},
-		{
-			label: 'Technology',
-			headline: 'Convenience Changes Faster Than Our Habits Do',
-			author: 'Development sample — not ZachTheElk',
-			publicationDate: 'Sample date: September 6, 2026',
-			readTime: '3 min read sample',
-		},
-	],
+	briefs: cultureSection.briefs.map((story) => ({ ...story, label: story.formatLabel })),
 	developmentOnly: true,
 };
 
-// Development-only Features samples for testing a thesis-led, long-form hierarchy.
-const featuresSection = {
-	primaryStory: {
-		label: 'Design analysis',
-		headline: 'What a Game Teaches Us Before It Explains a Single Rule',
-		dek: 'A development-only layout sample following the quiet ways spaces, consequences, and repeated choices can teach a system more effectively than instructions do.',
-		author: 'Development sample — not ZachTheElk',
-		publicationDate: 'Sample date: September 6, 2026',
-		readTime: '12 min read sample',
-	},
-	secondaryStories: [
-		{
-			label: 'Historical thread',
-			headline: 'The Interface Ideas That Survived Their Original Hardware',
-			dek: 'Development-only copy testing an evergreen feature with a restrained supporting image.',
-			author: 'Development sample — not ZachTheElk',
-			publicationDate: 'Sample date: September 6, 2026',
-			readTime: '9 min read sample',
-			image: {
-				alt: 'Development-only Features image placeholder; no editorial image has been selected.',
-			},
-		},
-		{
-			label: 'Essay',
-			headline: 'Why Useful Friction Can Make a Digital Place Feel Real',
-			dek: 'A development-only sample about the difference between an obstacle and a system that gives decisions weight.',
-			author: 'Development sample — not ZachTheElk',
-			publicationDate: 'Sample date: September 6, 2026',
-			readTime: '8 min read sample',
-		},
-	],
+const featuresProps = {
+	primaryStory: { ...featuresSection.primaryStory, label: featuresSection.primaryStory.formatLabel },
+	secondaryStories: featuresSection.secondaryStories.map((story) => ({ ...story, label: story.formatLabel })),
 	developmentOnly: true,
 };
 ---
 
 <Layout>
 	<a class="skip-link" href="#main-content">Skip to main content</a>
-
 	<div class="site-frame">
 		<SiteHeader />
-
 		<div class="publication-grid">
 			<main class="main-region" id="main-content" tabindex="-1">
-				<FeaturedStory {...featuredStory} />
-				<NewestColumn {...newestColumn} />
-				<GamingSection {...gamingSection} />
-				<CultureSection {...cultureSection} />
-				<FeaturesSection {...featuresSection} />
+				<FeaturedStory {...featuredProps} />
+				<NewestColumn {...columnProps} />
+				<GamingSection {...gamingProps} />
+				<CultureSection {...cultureProps} />
+				<FeaturesSection {...featuresProps} />
 			</main>
-
 			<aside class="right-rail" aria-labelledby="right-rail-title">
 				<div class="rail-placeholder">
 					<p class="panel-label">Right rail</p>
@@ -184,7 +65,6 @@ const featuresSection = {
 				</div>
 			</aside>
 		</div>
-
 		<SiteFooter />
 	</div>
 </Layout>

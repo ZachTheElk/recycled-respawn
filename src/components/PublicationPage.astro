@@ -1,0 +1,34 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SiteFooter from './SiteFooter.astro';
+import SiteHeader from './SiteHeader.astro';
+
+interface Props {
+	title: string;
+	description: string;
+	heading: string;
+	intro: string;
+	noindex?: boolean;
+}
+
+const { title, description, heading, intro, noindex = false } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+---
+
+<Layout {title} {description} {canonicalUrl} {noindex}>
+	<a class="skip-link" href="#main-content">Skip to main content</a>
+	<div class="site-frame">
+		<SiteHeader />
+		<main class="publication-page" id="main-content" tabindex="-1">
+			<header class="publication-page-header">
+				<p class="panel-label">Publication</p>
+				<h1>{heading}</h1>
+				<p class="publication-page-intro">{intro}</p>
+			</header>
+			<div class="publication-page-body">
+				<slot />
+			</div>
+		</main>
+		<SiteFooter />
+	</div>
+</Layout>

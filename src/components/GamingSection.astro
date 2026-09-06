@@ -6,8 +6,8 @@ interface Story {
 	publicationDate: string;
 	publicationDatetime?: string;
 	readTime: string;
-	href?: string;
-	type?: 'article' | 'review';
+	href?: string | null;
+	type?: 'article' | 'opinion' | 'review';
 }
 
 interface LeadStory extends Story {

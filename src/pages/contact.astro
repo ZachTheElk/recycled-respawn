@@ -1,0 +1,32 @@
+---
+import PublicationPage from '../components/PublicationPage.astro';
+
+const title = 'Contact | Recycled Respawn';
+const description = 'Contact information for press, corrections, interviews, collaboration, and publication business.';
+---
+
+<PublicationPage
+	{title}
+	{description}
+	heading="Contact"
+	intro="One direct path for publication-related inquiries."
+	noindex
+>
+	<section aria-labelledby="inquiries-heading">
+		<h2 id="inquiries-heading">Publication inquiries</h2>
+		<p>
+			Recycled Respawn welcomes relevant inquiries about press or review access, interviews,
+			corrections, collaboration, and publication-related business.
+		</p>
+		<p>
+			Review access does not guarantee coverage or favorable coverage. Editorial conclusions remain
+			independent.
+		</p>
+
+		<!-- PRE-LAUNCH PLACEHOLDER AUDIT: Replace this notice with the established publication contact path and remove noindex. -->
+		<div class="development-notice" role="note" aria-labelledby="contact-development-title">
+			<p class="development-notice-label" id="contact-development-title">Development preview</p>
+			<p>A publication contact address has not been connected yet. Replace this notice before launch.</p>
+		</div>
+	</section>
+</PublicationPage>

@@ -4,11 +4,23 @@ import '../styles/global.css';
 interface Props {
 	title?: string;
 	description?: string;
+	canonicalUrl?: URL;
+	ogType?: 'website' | 'article';
+	socialImage?: URL;
+	publishedAt?: Date;
+	updatedAt?: Date;
+	noindex?: boolean;
 }
 
 const {
 	title = 'Recycled Respawn',
 	description = 'An independent gaming and culture publication.',
+	canonicalUrl,
+	ogType = 'website',
+	socialImage,
+	publishedAt,
+	updatedAt,
+	noindex = false,
 } = Astro.props;
 ---
 
@@ -18,6 +30,15 @@ const {
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content={description} />
+		{noindex && <meta name="robots" content="noindex, nofollow" />}
+		{canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+		<meta property="og:type" content={ogType} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		{canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+		{socialImage && <meta property="og:image" content={socialImage} />}
+		{publishedAt && <meta property="article:published_time" content={publishedAt.toISOString()} />}
+		{updatedAt && <meta property="article:modified_time" content={updatedAt.toISOString()} />}
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>

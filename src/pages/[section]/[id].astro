@@ -1,0 +1,337 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import SiteFooter from '../../components/SiteFooter.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import { DEVELOPMENT_FIXTURE_ID } from '../../data/content-foundation';
+import Layout from '../../layouts/Layout.astro';
+import {
+	estimateReadTime,
+	formatArticleDate,
+	getArticleUrl,
+	getPublishedArticles,
+} from '../../lib/articles';
+
+export async function getStaticPaths() {
+	const articles = await getCollection('articles');
+	const routableArticles = [
+		...getPublishedArticles(articles),
+		...articles.filter((article) => article.id === DEVELOPMENT_FIXTURE_ID),
+	];
+
+	return routableArticles.map((article) => ({
+		params: { section: article.data.section, id: article.id },
+		props: { article },
+	}));
+}
+
+interface Props {
+	article: CollectionEntry<'articles'>;
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+const { data } = article;
+const isDevelopmentFixture = article.id === DEVELOPMENT_FIXTURE_ID;
+const articleUrl = getArticleUrl(article);
+const canonicalUrl = new URL(articleUrl, Astro.site);
+const readMinutes = estimateReadTime(article.body ?? '');
+const sectionLabel = data.section.charAt(0).toUpperCase() + data.section.slice(1);
+const socialImage = !isDevelopmentFixture && data.hero ? new URL(data.hero.image.src, Astro.site) : undefined;
+---
+
+<Layout
+	title={`${data.title} | Recycled Respawn`}
+	description={data.seoDescription ?? data.dek}
+	canonicalUrl={canonicalUrl}
+	ogType="article"
+	socialImage={socialImage}
+	publishedAt={data.publishedAt}
+	updatedAt={data.updatedAt}
+	noindex={isDevelopmentFixture || data.draft}
+>
+	<a class="skip-link" href="#article-content">Skip to article</a>
+
+	<div class="site-frame">
+		<SiteHeader />
+
+		<main class="article-page" id="article-content" tabindex="-1">
+			<nav class="article-page__breadcrumb" aria-label="Article location">
+				<a href="/">Home</a>
+				<span aria-hidden="true">/</span>
+				<span>{sectionLabel}</span>
+			</nav>
+
+			<article>
+				<header class="article-header">
+					{isDevelopmentFixture && (
+						<p class="development-banner">Development-only article fixture · Not published editorial work</p>
+					)}
+					<p class="article-header__label">{data.formatLabel ?? sectionLabel}</p>
+					<h1>{data.title}</h1>
+					<p class="article-header__dek">{data.dek}</p>
+					<div class="article-header__metadata" aria-label="Article details">
+						<span>By {data.author}</span>
+						<span>
+							Published <time datetime={data.publishedAt.toISOString()}>{formatArticleDate(data.publishedAt)}</time>
+						</span>
+						{data.updatedAt && (
+							<span>
+								Updated <time datetime={data.updatedAt.toISOString()}>{formatArticleDate(data.updatedAt)}</time>
+							</span>
+						)}
+						<span>{readMinutes} min read</span>
+					</div>
+				</header>
+
+				{data.hero && (
+					<figure class="article-hero">
+						<Image src={data.hero.image} alt={data.hero.alt} widths={[720, 1080, 1440]} sizes="(max-width: 48rem) 100vw, 72rem" />
+						<figcaption>
+							{data.hero.caption && <span>{data.hero.caption}</span>}
+							<span class="article-hero__credit">
+								{data.hero.credit} Provenance: {data.hero.provenance}.
+								{data.hero.sourceUrl && <a href={data.hero.sourceUrl}>Source</a>}
+								{data.hero.license && ` License: ${data.hero.license}.`}
+							</span>
+						</figcaption>
+					</figure>
+				)}
+
+				<div class="article-body">
+					<Content />
+				</div>
+
+				{data.corrections && data.corrections.length > 0 && (
+					<section class="article-corrections" aria-labelledby="corrections-title">
+						<h2 id="corrections-title">Corrections and updates</h2>
+						<ul>
+							{data.corrections.map((correction) => (
+								<li>
+									<time datetime={correction.date.toISOString()}>{formatArticleDate(correction.date)}</time>
+									— {correction.note}
+								</li>
+							))}
+						</ul>
+					</section>
+				)}
+			</article>
+
+			<a class="article-page__back" href="/">← Back to the homepage</a>
+		</main>
+
+		<SiteFooter />
+	</div>
+</Layout>
+
+<style>
+	.article-page {
+		padding: clamp(1rem, 4vw, 3.5rem);
+	}
+
+	.article-page__breadcrumb {
+		display: flex;
+		gap: 0.45rem;
+		max-width: 72rem;
+		margin: 0 auto 1.25rem;
+		color: var(--shell-gray-500);
+		font-size: 0.82rem;
+	}
+
+	.article-page__breadcrumb a,
+	.article-page__back,
+	.article-body :global(a),
+	.article-hero a {
+		color: var(--shell-blue-700);
+		text-underline-offset: 0.15em;
+	}
+
+	.article-header,
+	.article-hero {
+		max-width: 72rem;
+		margin-inline: auto;
+	}
+
+	.article-header {
+		padding: clamp(1.25rem, 3.5vw, 2.75rem);
+		background: var(--shell-surface);
+		border: 1px solid var(--shell-gray-200);
+		border-top: 0.4rem solid var(--shell-blue-700);
+	}
+
+	.development-banner,
+	.article-header__label {
+		margin: 0;
+		font-size: 0.76rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		line-height: 1.35;
+		text-transform: uppercase;
+	}
+
+	.development-banner {
+		margin: calc(clamp(1.25rem, 3.5vw, 2.75rem) * -1) calc(clamp(1.25rem, 3.5vw, 2.75rem) * -1) 1.4rem;
+		padding: 0.7rem clamp(1.25rem, 3.5vw, 2.75rem);
+		background: #e4e8e9;
+		color: #45525b;
+		border-bottom: 1px solid var(--shell-gray-200);
+	}
+
+	.article-header__label {
+		color: var(--shell-blue-700);
+	}
+
+	.article-header h1 {
+		max-width: 22ch;
+		margin: 0.55rem 0 0;
+		font-family: Georgia, 'Times New Roman', serif;
+		font-size: clamp(2.15rem, 5vw, 4.5rem);
+		letter-spacing: -0.035em;
+		line-height: 0.99;
+	}
+
+	.article-header__dek {
+		max-width: 46rem;
+		margin: 1rem 0 0;
+		color: #46525c;
+		font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+		line-height: 1.5;
+	}
+
+	.article-header__metadata {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem 0;
+		margin-top: 1.25rem;
+		color: var(--shell-gray-500);
+		font-size: 0.82rem;
+	}
+
+	.article-header__metadata span + span::before {
+		content: '';
+		display: inline-block;
+		width: 0.22rem;
+		height: 0.22rem;
+		margin: 0 0.55rem 0.15rem;
+		background: var(--shell-blue-700);
+		border-radius: 50%;
+	}
+
+	.article-hero {
+		margin-top: 1.25rem;
+		padding: clamp(0.75rem, 2vw, 1.25rem);
+		background: #e4e8e9;
+		border: 1px solid var(--shell-gray-200);
+	}
+
+	.article-hero :global(img) {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	.article-hero figcaption {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 0.35rem 1.5rem;
+		margin-top: 0.65rem;
+		color: #4d5962;
+		font-size: 0.78rem;
+		line-height: 1.45;
+	}
+
+	.article-hero__credit {
+		color: var(--shell-gray-500);
+	}
+
+	.article-body,
+	.article-corrections {
+		max-width: 68ch;
+		margin-inline: auto;
+	}
+
+	.article-body {
+		padding: clamp(2rem, 5vw, 4rem) 0;
+		font-family: Georgia, 'Times New Roman', serif;
+		font-size: clamp(1.05rem, 1.4vw, 1.16rem);
+		line-height: 1.78;
+	}
+
+	.article-body :global(p),
+	.article-body :global(ul),
+	.article-body :global(ol),
+	.article-body :global(blockquote) {
+		margin: 0 0 1.35em;
+	}
+
+	.article-body :global(h2) {
+		margin: 2.1em 0 0.55em;
+		font-size: clamp(1.65rem, 3vw, 2.25rem);
+		line-height: 1.12;
+	}
+
+	.article-body :global(li + li) {
+		margin-top: 0.35em;
+	}
+
+	.article-body :global(blockquote) {
+		padding: 0.9rem 1.2rem;
+		background: #e8ebeb;
+		border-left: 0.3rem solid var(--shell-blue-700);
+		font-size: 1.08em;
+	}
+
+	.article-body :global(blockquote p:last-child) {
+		margin-bottom: 0;
+	}
+
+	.article-corrections {
+		padding: 1.25rem;
+		background: var(--shell-surface);
+		border: 1px solid var(--shell-gray-200);
+		border-left: 0.3rem solid var(--shell-blue-700);
+	}
+
+	.article-corrections h2 {
+		margin: 0;
+		font-family: Georgia, 'Times New Roman', serif;
+		font-size: 1.35rem;
+	}
+
+	.article-corrections ul {
+		margin: 0.75rem 0 0;
+		padding-left: 1.2rem;
+	}
+
+	.article-page__back {
+		display: block;
+		max-width: 68ch;
+		margin: 2rem auto 0;
+		font-weight: 700;
+	}
+
+	@media (max-width: 46rem) {
+		.article-page {
+			padding: 1rem;
+		}
+
+		.article-header h1 {
+			font-size: clamp(2rem, 10vw, 3rem);
+			line-height: 1.02;
+		}
+
+		.article-header__metadata {
+			display: grid;
+			gap: 0.25rem;
+		}
+
+		.article-header__metadata span + span::before {
+			display: none;
+		}
+
+		.article-hero figcaption {
+			display: grid;
+		}
+	}
+</style>

@@ -4,19 +4,37 @@ import GamingSection from '../components/GamingSection.astro';
 import CultureSection from '../components/CultureSection.astro';
 import FeaturesSection from '../components/FeaturesSection.astro';
 import NewestColumn from '../components/NewestColumn.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { getEntry } from 'astro:content';
+import { homepageCuration } from '../data/homepage';
 import Layout from '../layouts/Layout.astro';
+import { estimateReadTime, formatArticleDate, getArticleUrl } from '../lib/articles';
 
-// Development-only sample data. Replace with approved editorial content in a later task.
+const featuredEntry = await getEntry('articles', homepageCuration.featuredStory);
+
+if (!featuredEntry) {
+	throw new Error(`Homepage Featured Story not found: ${homepageCuration.featuredStory}`);
+}
+
+// One collection-backed slot proves the content path; all other homepage samples remain unchanged.
 const featuredStory = {
-	section: 'Gaming',
-	headline: 'When a Familiar Game Becomes a Place Worth Returning To',
-	dek: 'A layout test exploring how memory, routine, and changing player expectations can reshape the way an old favorite feels years later.',
-	author: 'Development sample — not ZachTheElk',
-	publicationDate: 'Sample date: September 5, 2026',
-	readTime: '6 min read sample',
-	image: {
-		alt: 'Development-only image placeholder; final editorial image has not been selected.',
-	},
+	section: featuredEntry.data.section.charAt(0).toUpperCase() + featuredEntry.data.section.slice(1),
+	headline: featuredEntry.data.title,
+	dek: featuredEntry.data.dek,
+	author: featuredEntry.data.author,
+	publicationDate: `Development fixture date: ${formatArticleDate(featuredEntry.data.publishedAt)}`,
+	publicationDatetime: featuredEntry.data.publishedAt.toISOString(),
+	readTime: `${estimateReadTime(featuredEntry.body ?? '')} min read fixture`,
+	href: getArticleUrl(featuredEntry),
+	image: featuredEntry.data.hero
+		? {
+				src: featuredEntry.data.hero.image.src,
+				alt: featuredEntry.data.hero.alt,
+			}
+		: {
+				alt: 'Development-only image placeholder; final editorial image has not been selected.',
+			},
 	developmentOnly: true,
 };
 
@@ -147,22 +165,7 @@ const featuresSection = {
 	<a class="skip-link" href="#main-content">Skip to main content</a>
 
 	<div class="site-frame">
-		<header class="site-header">
-			<div class="masthead-row">
-				<div class="brand-mark-slot" aria-hidden="true"></div>
-				<a class="wordmark" href="/" aria-label="Recycled Respawn home">RECYCLED RESPAWN</a>
-			</div>
-
-			<div class="navigation-row">
-				<p class="navigation-label" id="primary-navigation-label">Sections</p>
-				<nav class="primary-navigation" aria-labelledby="primary-navigation-label">
-					<span aria-disabled="true" title="Section in development">Gaming</span>
-					<span aria-disabled="true" title="Section in development">Culture</span>
-					<span aria-disabled="true" title="Section in development">Features</span>
-				</nav>
-				<p class="navigation-status">Section pages are in development.</p>
-			</div>
-		</header>
+		<SiteHeader />
 
 		<div class="publication-grid">
 			<main class="main-region" id="main-content" tabindex="-1">
@@ -182,9 +185,6 @@ const featuresSection = {
 			</aside>
 		</div>
 
-		<footer class="site-footer">
-			<p><strong>Recycled Respawn</strong></p>
-			<p>Independent gaming and culture publication.</p>
-		</footer>
+		<SiteFooter />
 	</div>
 </Layout>

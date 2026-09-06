@@ -180,7 +180,9 @@ a {
 .rail-modules {
 	display: flex;
 	flex-direction: column;
+	justify-content: space-between;
 	gap: clamp(2rem, 4vw, 3.75rem);
+	min-height: 100%;
 }
 
 .rail-module {
@@ -298,10 +300,6 @@ a {
 	border-bottom: 1px solid #c5cbce;
 }
 
-.site-update {
-	margin-top: clamp(0rem, 2vw, 1.5rem);
-}
-
 .site-update h3 {
 	margin-top: 1rem;
 }
@@ -389,11 +387,9 @@ a {
 	}
 
 	.rail-modules {
+		justify-content: flex-start;
 		gap: 1.75rem;
-	}
-
-	.site-update {
-		margin-top: 0;
+		min-height: 0;
 	}
 
 	.site-footer {

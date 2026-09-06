@@ -51,6 +51,12 @@ export function getPublishedArticles(articles: ArticleEntry[]) {
 	return articles.filter((article) => !article.data.draft);
 }
 
+export function getRecentArticles(articles: ArticleEntry[], limit = 4) {
+	return getPublishedArticles(articles)
+		.sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
+		.slice(0, limit);
+}
+
 export function getSectionArticles(articles: ArticleEntry[], section: ArticleSection) {
 	return getPublishedArticles(articles)
 		.filter((article) => article.data.section === section)

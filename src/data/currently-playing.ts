@@ -1,6 +1,6 @@
 export interface CurrentlyPlayingEntry {
 	title: string;
-	platform: string;
+	platform?: string;
 	status?: string;
 	context?: string;
 }
@@ -9,7 +9,6 @@ export interface CurrentlyPlayingEntry {
 export const currentlyPlaying: CurrentlyPlayingEntry[] = [
 	{
 		title: 'Star Wars Zero Company',
-		platform: 'PC',
 		status: 'Campaign in progress',
 		context: 'Current focus; notes may become future coverage.',
 	},

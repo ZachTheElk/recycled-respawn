@@ -21,7 +21,7 @@ const formatType = (type: ArticleType) => type.charAt(0).toUpperCase() + type.sl
 				{currentlyPlaying.map((game) => (
 					<li>
 						<h3>{game.title}</h3>
-						<p class="playing-platform">{game.platform}</p>
+						{game.platform && <p class="playing-platform">{game.platform}</p>}
 						{game.status && <p class="playing-status">{game.status}</p>}
 						{game.context && <p class="playing-context">{game.context}</p>}
 					</li>

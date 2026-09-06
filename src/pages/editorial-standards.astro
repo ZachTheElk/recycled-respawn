@@ -1,0 +1,60 @@
+---
+import PublicationPage from '../components/PublicationPage.astro';
+
+const title = 'Editorial Standards & Review Policy | Recycled Respawn';
+const description = 'How Recycled Respawn approaches authorship, reviews, independence, disclosures, and corrections.';
+---
+
+<PublicationPage
+	{title}
+	{description}
+	heading="Editorial Standards & Review Policy"
+	intro="A practical account of how Recycled Respawn creates, reviews, discloses, and corrects its work."
+>
+	<section aria-labelledby="authorship-heading">
+		<h2 id="authorship-heading">Authorship</h2>
+		<p>
+			Published writing attributed to ZachTheElk is genuinely authored by Zach. AI tools may assist
+			with research, organization, editing, critique, formatting, coding, and quality assurance, but
+			they do not manufacture Zach-attributed published prose.
+		</p>
+	</section>
+
+	<section aria-labelledby="reviews-heading">
+		<h2 id="reviews-heading">Reviews</h2>
+		<p>
+			Reviews live within Gaming. Recycled Respawn intends to use one primary overall verdict system;
+			numerical scoring remains an option. Redundant category-by-category sub-scores and overlapping
+			rating systems are avoided. The final verdict presentation will be tested against real reviews
+			before it is standardized.
+		</p>
+	</section>
+
+	<section aria-labelledby="independence-heading">
+		<h2 id="independence-heading">Independence</h2>
+		<p>
+			Review copies or access do not guarantee coverage, and they never guarantee positive coverage.
+			Editorial conclusions remain independent. Publishers and developers do not receive
+			pre-publication approval of independent editorial copy.
+		</p>
+	</section>
+
+	<section aria-labelledby="disclosures-heading">
+		<h2 id="disclosures-heading">Disclosures</h2>
+		<p>
+			Material support is disclosed when relevant, including review copies, hardware, travel,
+			sponsorship, or other meaningful consideration. Sponsored content is acceptable only when
+			clearly labeled and kept distinct from independent editorial work. Affiliate links may be used
+			with clear disclosure.
+		</p>
+	</section>
+
+	<section aria-labelledby="corrections-heading">
+		<h2 id="corrections-heading">Corrections</h2>
+		<p>
+			Material corrections remain visible rather than being silently rewritten. Significant revisions
+			may include an updated date or explanatory note. Ordinary spelling, punctuation, and grammar
+			fixes do not require a correction notice.
+		</p>
+	</section>
+</PublicationPage>

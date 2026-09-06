@@ -1,6 +1,7 @@
 ---
 import FeaturedStory from '../components/FeaturedStory.astro';
 import GamingSection from '../components/GamingSection.astro';
+import CultureSection from '../components/CultureSection.astro';
 import NewestColumn from '../components/NewestColumn.astro';
 import Layout from '../layouts/Layout.astro';
 
@@ -66,6 +67,45 @@ const gamingSection = {
 	],
 	developmentOnly: true,
 };
+
+// Development-only Culture samples for testing a distinct editorial rhythm.
+const cultureSection = {
+	leadStory: {
+		headline: 'When the Interface Becomes Part of the Memory',
+		dek: 'A development-only layout sample about the menus, sounds, and small digital rituals that linger after the technology itself changes.',
+		author: 'Development sample — not ZachTheElk',
+		publicationDate: 'Sample date: September 6, 2026',
+		readTime: '6 min read sample',
+		image: {
+			alt: 'Development-only Culture image placeholder; no editorial image has been selected.',
+		},
+	},
+	briefs: [
+		{
+			label: 'Media note',
+			headline: 'The Comfort of Knowing Exactly When to Skip the Intro',
+			dek: 'Development-only copy testing one compact Culture item with supporting context.',
+			author: 'Development sample — not ZachTheElk',
+			publicationDate: 'Sample date: September 6, 2026',
+			readTime: '4 min read sample',
+		},
+		{
+			label: 'Internet culture',
+			headline: 'A Community Archive Can Outlast the Platform That Needed It',
+			author: 'Development sample — not ZachTheElk',
+			publicationDate: 'Sample date: September 6, 2026',
+			readTime: '5 min read sample',
+		},
+		{
+			label: 'Technology',
+			headline: 'Convenience Changes Faster Than Our Habits Do',
+			author: 'Development sample — not ZachTheElk',
+			publicationDate: 'Sample date: September 6, 2026',
+			readTime: '3 min read sample',
+		},
+	],
+	developmentOnly: true,
+};
 ---
 
 <Layout>
@@ -94,6 +134,7 @@ const gamingSection = {
 				<FeaturedStory {...featuredStory} />
 				<NewestColumn {...newestColumn} />
 				<GamingSection {...gamingSection} />
+				<CultureSection {...cultureSection} />
 			</main>
 
 			<aside class="right-rail" aria-labelledby="right-rail-title">

@@ -1,0 +1,382 @@
+---
+interface Story {
+	headline: string;
+	dek?: string;
+	author: string;
+	publicationDate: string;
+	publicationDatetime?: string;
+	readTime: string;
+	href?: string;
+	label?: string;
+}
+
+interface CultureLead extends Story {
+	image: {
+		src?: string;
+		alt: string;
+	};
+}
+
+interface Props {
+	leadStory: CultureLead;
+	briefs: Story[];
+	developmentOnly?: boolean;
+}
+
+const { leadStory, briefs, developmentOnly = false } = Astro.props;
+---
+
+<section class="culture-section" aria-labelledby="culture-section-title">
+	<header class="culture-section__header">
+		<div>
+			<p class="culture-section__eyebrow">Section</p>
+			<h2 id="culture-section-title">Culture</h2>
+		</div>
+		{developmentOnly && <p class="culture-section__development-note">Development-only section sample</p>}
+	</header>
+
+	<article class="culture-lead" aria-labelledby="culture-lead-headline">
+		<div class="culture-lead__copy">
+			<p class="story-label">Culture lead</p>
+			<h3 id="culture-lead-headline">
+				{leadStory.href ? <a href={leadStory.href}>{leadStory.headline}</a> : leadStory.headline}
+			</h3>
+			{leadStory.dek && <p class="culture-lead__dek">{leadStory.dek}</p>}
+			<footer class="story-metadata" aria-label="Story details">
+				<span>By {leadStory.author}</span>
+				<span>
+					{
+						leadStory.publicationDatetime ? (
+							<time datetime={leadStory.publicationDatetime}>{leadStory.publicationDate}</time>
+						) : (
+							leadStory.publicationDate
+						)
+					}
+				</span>
+				<span>{leadStory.readTime}</span>
+			</footer>
+		</div>
+
+		<figure class="culture-lead__media">
+			{
+				leadStory.image.src ? (
+					<img src={leadStory.image.src} alt={leadStory.image.alt} loading="lazy" decoding="async" />
+				) : (
+					<div class="culture-image-placeholder" aria-hidden="true">
+						<span>Development image well</span>
+						<small>3:2 crop area</small>
+					</div>
+				)
+			}
+			{!leadStory.image.src && <figcaption>{leadStory.image.alt}</figcaption>}
+		</figure>
+	</article>
+
+	<div class="culture-briefs" aria-label="More from Culture">
+		{
+			briefs.map((story, index) => (
+				<article class="culture-brief" aria-labelledby={`culture-brief-headline-${index}`}>
+					<div class="culture-brief__position">
+						<span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+						<p class="story-label">{story.label ?? 'Culture note'}</p>
+					</div>
+					<div class="culture-brief__copy">
+						<h3 id={`culture-brief-headline-${index}`}>
+							{story.href ? <a href={story.href}>{story.headline}</a> : story.headline}
+						</h3>
+						{story.dek && <p class="culture-brief__dek">{story.dek}</p>}
+					</div>
+					<footer class="story-metadata" aria-label="Story details">
+						<span>By {story.author}</span>
+						<span>
+							{
+								story.publicationDatetime ? (
+									<time datetime={story.publicationDatetime}>{story.publicationDate}</time>
+								) : (
+									story.publicationDate
+								)
+							}
+						</span>
+						<span>{story.readTime}</span>
+					</footer>
+				</article>
+			))
+		}
+	</div>
+</section>
+
+<style>
+	.culture-section {
+		margin-top: clamp(1.5rem, 2.8vw, 2.5rem);
+		background: var(--shell-surface);
+		border: 1px solid var(--shell-gray-200);
+	}
+
+	.culture-section__header {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 0.75rem 1.5rem;
+		padding: 0.8rem 1rem 0.7rem;
+		border-bottom: 0.35rem double var(--shell-blue-700);
+	}
+
+	.culture-section__header div {
+		display: flex;
+		align-items: baseline;
+		gap: 0.7rem;
+	}
+
+	.culture-section__eyebrow,
+	.culture-section__development-note,
+	.story-label {
+		margin: 0;
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		line-height: 1.3;
+		text-transform: uppercase;
+	}
+
+	.culture-section__eyebrow,
+	.story-label {
+		color: var(--shell-blue-700);
+	}
+
+	.culture-section__header h2 {
+		margin: 0;
+		font-family: Georgia, 'Times New Roman', serif;
+		font-size: 1.9rem;
+		line-height: 1;
+	}
+
+	.culture-section__development-note {
+		color: var(--shell-gray-500);
+		font-size: 0.7rem;
+	}
+
+	.culture-lead {
+		display: grid;
+		grid-template-columns: minmax(0, 1.35fr) minmax(15rem, 0.8fr);
+		border-bottom: 1px solid var(--shell-gray-200);
+	}
+
+	.culture-lead__copy {
+		padding: clamp(1.25rem, 2.4vw, 2rem);
+	}
+
+	.culture-lead h3,
+	.culture-brief h3 {
+		font-family: Georgia, 'Times New Roman', serif;
+		letter-spacing: -0.02em;
+	}
+
+	.culture-lead h3 {
+		max-width: 18ch;
+		margin: 0.45rem 0 0;
+		font-size: clamp(1.7rem, 2.5vw, 2.4rem);
+		line-height: 1.07;
+	}
+
+	.culture-lead__dek {
+		max-width: 36rem;
+		margin: 0.8rem 0 0;
+		color: #46525c;
+		font-size: 0.98rem;
+		line-height: 1.52;
+	}
+
+	.culture-lead__media {
+		min-width: 0;
+		margin: 0;
+		padding: 1rem;
+		background: #e4e8e9;
+		border-left: 1px solid var(--shell-gray-200);
+	}
+
+	.culture-lead__media img,
+	.culture-image-placeholder {
+		display: block;
+		width: 100%;
+		aspect-ratio: 3 / 2;
+		object-fit: cover;
+	}
+
+	.culture-image-placeholder {
+		display: grid;
+		place-content: center;
+		gap: 0.1rem;
+		padding: 0.8rem;
+		background: #d4dadc;
+		border: 1px dashed #89969e;
+		color: #4b5962;
+		text-align: center;
+	}
+
+	.culture-image-placeholder span {
+		font-size: 0.84rem;
+		font-weight: 700;
+		letter-spacing: 0.03em;
+	}
+
+	.culture-image-placeholder small,
+	.culture-lead__media figcaption {
+		font-size: 0.74rem;
+	}
+
+	.culture-lead__media figcaption {
+		margin-top: 0.45rem;
+		color: var(--shell-gray-500);
+		line-height: 1.4;
+	}
+
+	.culture-briefs {
+		padding-inline: 1rem;
+	}
+
+	.culture-brief {
+		display: grid;
+		grid-template-columns: 7.5rem minmax(0, 1fr) minmax(12rem, 0.75fr);
+		align-items: start;
+		gap: 1rem;
+		padding-block: 1rem;
+	}
+
+	.culture-brief + .culture-brief {
+		border-top: 1px solid var(--shell-gray-200);
+	}
+
+	.culture-brief__position {
+		display: grid;
+		grid-template-columns: 1.8rem 1fr;
+		align-items: baseline;
+		gap: 0.45rem;
+	}
+
+	.culture-brief__position > span {
+		color: #7a858c;
+		font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+		font-size: 0.72rem;
+	}
+
+	.culture-brief h3 {
+		margin: 0;
+		font-size: 1.3rem;
+		line-height: 1.14;
+	}
+
+	.culture-brief__dek {
+		margin: 0.45rem 0 0;
+		color: #4d5962;
+		font-size: 0.88rem;
+		line-height: 1.45;
+	}
+
+	.culture-lead h3 a,
+	.culture-brief h3 a {
+		text-decoration-color: transparent;
+		text-decoration-thickness: 0.08em;
+		text-underline-offset: 0.12em;
+	}
+
+	.culture-lead h3 a:hover,
+	.culture-brief h3 a:hover {
+		text-decoration-color: var(--shell-blue-700);
+	}
+
+	.culture-lead h3 a:focus-visible,
+	.culture-brief h3 a:focus-visible {
+		outline: 0.18rem solid var(--shell-blue-700);
+		outline-offset: 0.18rem;
+	}
+
+	.story-metadata {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.3rem 0;
+		margin-top: 0.85rem;
+		color: #59656e;
+		font-size: 0.76rem;
+		line-height: 1.4;
+	}
+
+	.story-metadata span {
+		display: inline-flex;
+		align-items: center;
+	}
+
+	.story-metadata span + span::before {
+		content: '';
+		width: 0.2rem;
+		height: 0.2rem;
+		margin-inline: 0.45rem;
+		background: var(--shell-blue-700);
+		border-radius: 50%;
+	}
+
+	.culture-brief > .story-metadata {
+		margin-top: 0;
+	}
+
+	@media (max-width: 75rem) {
+		.culture-lead {
+			grid-template-columns: minmax(0, 1.2fr) minmax(13rem, 0.8fr);
+		}
+
+		.culture-brief {
+			grid-template-columns: 6.5rem minmax(0, 1fr);
+		}
+
+		.culture-brief > .story-metadata {
+			grid-column: 2;
+		}
+	}
+
+	@media (max-width: 46rem) {
+		.culture-section__header {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+
+		.culture-lead {
+			grid-template-columns: 1fr;
+		}
+
+		.culture-lead__media {
+			padding: 0.75rem;
+			border-top: 1px solid var(--shell-gray-200);
+			border-left: 0;
+		}
+
+		.culture-lead__copy {
+			padding: 1.2rem;
+		}
+
+		.culture-lead h3 {
+			font-size: clamp(1.55rem, 7.1vw, 2rem);
+			line-height: 1.09;
+		}
+
+		.culture-briefs {
+			padding-inline: 0.9rem;
+		}
+
+		.culture-brief {
+			grid-template-columns: 1fr;
+			gap: 0.55rem;
+		}
+
+		.culture-brief__position {
+			grid-template-columns: 1.8rem auto;
+			justify-content: start;
+		}
+
+		.culture-brief > .story-metadata {
+			grid-column: auto;
+		}
+
+		.culture-brief h3 {
+			font-size: 1.22rem;
+		}
+	}
+</style>

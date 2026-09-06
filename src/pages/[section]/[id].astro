@@ -59,7 +59,7 @@ const socialImage = !isDevelopmentFixture && data.hero ? new URL(data.hero.image
 			<nav class="article-page__breadcrumb" aria-label="Article location">
 				<a href="/">Home</a>
 				<span aria-hidden="true">/</span>
-				<span>{sectionLabel}</span>
+				<a href={`/${data.section}/`}>{sectionLabel}</a>
 			</nav>
 
 			<article>
@@ -117,7 +117,7 @@ const socialImage = !isDevelopmentFixture && data.hero ? new URL(data.hero.image
 				)}
 			</article>
 
-			<a class="article-page__back" href="/">← Back to the homepage</a>
+			<a class="article-page__back" href={`/${data.section}/`}>← Back to {sectionLabel}</a>
 		</main>
 
 		<SiteFooter />

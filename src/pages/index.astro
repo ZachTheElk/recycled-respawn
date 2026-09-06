@@ -6,10 +6,14 @@ import FeaturesSection from '../components/FeaturesSection.astro';
 import NewestColumn from '../components/NewestColumn.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
+import RightRail from '../components/RightRail.astro';
 import { getHomepageStories } from '../data/homepage';
+import { getCollection } from 'astro:content';
+import { getRecentArticles } from '../lib/articles';
 import Layout from '../layouts/Layout.astro';
 
 const { featuredStory, newestColumn, gamingSection, cultureSection, featuresSection } = await getHomepageStories();
+const recentArticles = getRecentArticles(await getCollection('articles'), 4);
 
 const featuredProps = {
 	...featuredStory,
@@ -57,13 +61,7 @@ const featuresProps = {
 				<CultureSection {...cultureProps} />
 				<FeaturesSection {...featuresProps} />
 			</main>
-			<aside class="right-rail" aria-labelledby="right-rail-title">
-				<div class="rail-placeholder">
-					<p class="panel-label">Right rail</p>
-					<h2 id="right-rail-title">Supporting publication space</h2>
-					<p>Future modules will be defined separately.</p>
-				</div>
-			</aside>
+			<RightRail {recentArticles} />
 		</div>
 		<SiteFooter />
 	</div>

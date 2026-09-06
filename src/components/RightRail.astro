@@ -1,0 +1,59 @@
+---
+import type { ArticleEntry, ArticleType } from '../lib/articles';
+import { formatArticleDate, formatArticleSection, getArticleUrl } from '../lib/articles';
+import { currentlyPlaying } from '../data/currently-playing';
+import { siteUpdate } from '../data/site-update';
+
+interface Props {
+	recentArticles: ArticleEntry[];
+}
+
+const { recentArticles } = Astro.props;
+const formatType = (type: ArticleType) => type.charAt(0).toUpperCase() + type.slice(1);
+---
+
+<aside class="right-rail" aria-label="Publication notes and recent activity">
+	<div class="rail-modules">
+		<section class="rail-module currently-playing" aria-labelledby="currently-playing-title">
+			<p class="rail-kicker">On the desk</p>
+			<h2 id="currently-playing-title">Currently Playing</h2>
+			<ul class="playing-list">
+				{currentlyPlaying.map((game) => (
+					<li>
+						<h3>{game.title}</h3>
+						<p class="playing-platform">{game.platform}</p>
+						{game.status && <p class="playing-status">{game.status}</p>}
+						{game.context && <p class="playing-context">{game.context}</p>}
+					</li>
+				))}
+			</ul>
+		</section>
+
+		<section class="rail-module recent-publications" aria-labelledby="recent-publications-title">
+			<p class="rail-kicker">From the archive</p>
+			<h2 id="recent-publications-title">Latest</h2>
+			{recentArticles.length > 0 ? (
+				<ol class="recent-list">
+					{recentArticles.map((article) => (
+						<li>
+							<p class="recent-context">{formatArticleSection(article.data.section)} · {article.data.formatLabel ?? formatType(article.data.type)}</p>
+							<h3><a href={getArticleUrl(article)}>{article.data.title}</a></h3>
+							<time datetime={article.data.publishedAt.toISOString()}>{formatArticleDate(article.data.publishedAt)}</time>
+						</li>
+					))}
+				</ol>
+			) : (
+				<p class="rail-empty">New work will appear here as it is published.</p>
+			)}
+		</section>
+
+		<section class="rail-module site-update" aria-labelledby="site-update-title">
+			<p class="rail-kicker">{siteUpdate.developmentOnly ? 'Development preview' : 'Publication note'}</p>
+			<h2 id="site-update-title">Site Update</h2>
+			<h3>{siteUpdate.title}</h3>
+			<time datetime={siteUpdate.date.toISOString()}>{formatArticleDate(siteUpdate.date)}</time>
+			<p>{siteUpdate.text}</p>
+			{siteUpdate.href && siteUpdate.linkLabel && <a class="site-update-link" href={siteUpdate.href}>{siteUpdate.linkLabel}</a>}
+		</section>
+	</div>
+</aside>

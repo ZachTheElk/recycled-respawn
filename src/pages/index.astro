@@ -13,7 +13,8 @@ import { getRecentArticles } from '../lib/articles';
 import Layout from '../layouts/Layout.astro';
 
 const { featuredStory, newestColumn, gamingSection, cultureSection, featuresSection } = await getHomepageStories();
-const recentArticles = getRecentArticles(await getCollection('articles'), 4);\nconst canonicalUrl = new URL('/', Astro.site);
+const recentArticles = getRecentArticles(await getCollection('articles'), 4);
+const canonicalUrl = new URL('/', Astro.site);
 
 const featuredProps = {
 	...featuredStory,

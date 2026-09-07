@@ -431,21 +431,6 @@ a {
 	outline-offset: 0.2rem;
 }
 
-.development-notice {
-	margin-top: 1.5rem;
-	padding: 1rem;
-	border: 1px dashed var(--shell-blue-700);
-	background: #e9ecea;
-}
-
-.development-notice .development-notice-label {
-	color: var(--shell-blue-700);
-	font-size: 0.72rem;
-	font-weight: 700;
-	letter-spacing: 0.1em;
-	text-transform: uppercase;
-}
-
 @media (max-width: 60rem) {
 	.site-frame {
 		width: 100%;

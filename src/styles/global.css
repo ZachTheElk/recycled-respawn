@@ -331,6 +331,106 @@ a {
 	color: #fff;
 }
 
+.footer-identity {
+	display: grid;
+	gap: 0.15rem;
+}
+
+.footer-navigation {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.35rem 1rem;
+}
+
+.footer-navigation a {
+	min-height: 2.75rem;
+	display: inline-flex;
+	align-items: center;
+	text-underline-offset: 0.2em;
+}
+
+.footer-navigation a:hover {
+	color: #fff;
+}
+
+.footer-navigation a:focus-visible {
+	outline: 0.18rem solid #fff;
+	outline-offset: 0.15rem;
+}
+
+.publication-page {
+	width: min(100%, 72rem);
+	min-height: 36rem;
+	padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1rem, 5vw, 4.5rem) clamp(3rem, 7vw, 6rem);
+}
+
+.publication-page-header {
+	max-width: 49rem;
+	padding-bottom: clamp(1.4rem, 3vw, 2.25rem);
+	border-bottom: 0.3rem solid var(--shell-navy-900);
+}
+
+.publication-page h1 {
+	margin: 0;
+	font-family: Georgia, 'Times New Roman', serif;
+	font-size: clamp(2.3rem, 6vw, 4.5rem);
+	line-height: 0.98;
+	letter-spacing: -0.035em;
+}
+
+.publication-page-intro {
+	max-width: 43rem;
+	margin: 1.2rem 0 0;
+	color: var(--shell-gray-500);
+	font-family: Georgia, 'Times New Roman', serif;
+	font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+	line-height: 1.45;
+}
+
+.publication-page-body {
+	max-width: 43rem;
+	padding-top: clamp(1.6rem, 4vw, 2.75rem);
+}
+
+.publication-page-body section + section {
+	margin-top: clamp(2rem, 4vw, 3rem);
+	padding-top: clamp(1.25rem, 3vw, 2rem);
+	border-top: 1px solid var(--shell-gray-200);
+}
+
+.publication-page-body h2 {
+	margin: 0 0 0.65rem;
+	color: var(--shell-navy-900);
+	font-family: Georgia, 'Times New Roman', serif;
+	font-size: clamp(1.4rem, 3vw, 1.8rem);
+	line-height: 1.15;
+}
+
+.publication-page-body p {
+	margin: 0;
+}
+
+.publication-page-body p + p {
+	margin-top: 1rem;
+}
+
+.publication-page-body a {
+	color: var(--shell-blue-700);
+	font-weight: 700;
+	text-decoration-thickness: 0.08em;
+	text-underline-offset: 0.18em;
+}
+
+.publication-page-body a:hover {
+	color: var(--shell-navy-900);
+}
+
+.publication-page-body a:focus-visible {
+	outline: 0.18rem solid var(--shell-blue-700);
+	outline-offset: 0.2rem;
+}
+
 @media (max-width: 60rem) {
 	.site-frame {
 		width: 100%;
@@ -394,6 +494,15 @@ a {
 
 	.site-footer {
 		flex-direction: column;
+	}
+
+	.footer-navigation {
+		margin-top: 0.55rem;
+	}
+
+	.publication-page {
+		min-height: 0;
+		padding-block: 1.5rem 3.5rem;
 	}
 }
 

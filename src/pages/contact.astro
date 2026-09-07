@@ -1,0 +1,26 @@
+---
+import PublicationPage from '../components/PublicationPage.astro';
+
+const title = 'Contact | Recycled Respawn';
+const description = 'Contact information for press, corrections, interviews, collaboration, and publication business.';
+---
+
+<PublicationPage
+	{title}
+	{description}
+	heading="Contact"
+	intro="One direct path for publication-related inquiries."
+>
+	<section aria-labelledby="inquiries-heading">
+		<h2 id="inquiries-heading">Publication inquiries</h2>
+		<p>
+			Recycled Respawn welcomes relevant inquiries about press or review access, interviews,
+			corrections, collaboration, and publication-related business.
+		</p>
+		<p>
+			Review access does not guarantee coverage or favorable coverage. Editorial conclusions remain
+			independent.
+		</p>
+		<p><strong>Email:</strong> <a href="mailto:contact@recycledrespawn.com">contact@recycledrespawn.com</a></p>
+	</section>
+</PublicationPage>

@@ -1,0 +1,37 @@
+---
+import PublicationPage from '../components/PublicationPage.astro';
+
+const title = 'About | Recycled Respawn';
+const description = 'About Recycled Respawn, an independent publication covering games, culture, and features.';
+---
+
+<PublicationPage
+	{title}
+	{description}
+	heading="About Recycled Respawn"
+	intro="An independent, creator-driven publication covering games, culture, and whatever else is worth digging into."
+>
+	<section aria-labelledby="publication-heading">
+		<h2 id="publication-heading">The publication</h2>
+		<p>
+			Recycled Respawn is created and edited by <strong>ZachTheElk</strong>, the public byline of
+			Zachary Elkins. Its primary editorial pillars are Gaming, Culture, and Features.
+		</p>
+		<p>
+			Games are the anchor, not the fence. Coverage may follow them into technology, media,
+			internet culture, criticism, and other subjects when there is a perspective worth pursuing.
+		</p>
+	</section>
+
+	<section aria-labelledby="approach-heading">
+		<h2 id="approach-heading">The approach</h2>
+		<p>
+			Recycled Respawn is selective by design. The goal is not to chase every news cycle, but to
+			publish analysis, criticism, essays, and observations that have something of their own to say.
+		</p>
+		<p>
+			When a material correction is necessary, it remains visible so readers can understand what
+			changed. More detail is available in the <a href="/editorial-standards/">Editorial Standards</a>.
+		</p>
+	</section>
+</PublicationPage>

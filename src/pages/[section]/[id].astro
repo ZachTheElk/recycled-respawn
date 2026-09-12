@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import SiteFooter from '../../components/SiteFooter.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
-import { DEVELOPMENT_FIXTURE_ID, isPrivatePreviewArticle } from '../../data/content-foundation';
+import { isPrivatePreviewArticle } from '../../data/content-foundation';
 import Layout from '../../layouts/Layout.astro';
 import {
 	estimateReadTime,
@@ -34,8 +34,7 @@ interface Props {
 const { article } = Astro.props;
 const { Content } = await render(article);
 const { data } = article;
-const isDevelopmentFixture = article.id === DEVELOPMENT_FIXTURE_ID;
-const isPrivatePreview = isPrivatePreviewArticle(article.id);
+const isPrivatePreview = data.draft && isPrivatePreviewArticle(article.id);
 const articleUrl = getArticleUrl(article);
 const canonicalUrl = new URL(articleUrl, Astro.site);
 const readMinutes = estimateReadTime(article.body ?? '');
@@ -68,11 +67,7 @@ const socialImage = !isPrivatePreview && data.hero ? new URL(data.hero.image.src
 			<article>
 				<header class="article-header">
 					{isPrivatePreview && (
-						<p class="development-banner">
-							{isDevelopmentFixture
-								? 'Development-only article fixture · Not published editorial work'
-								: 'Private workflow-test draft · Unfinished and not published editorial work'}
-						</p>
+						<p class="development-banner">Private preview · Unpublished draft</p>
 					)}
 					<p class="article-header__label">{data.formatLabel ?? sectionLabel}</p>
 					<h1>{data.title}</h1>

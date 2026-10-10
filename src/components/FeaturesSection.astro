@@ -1,5 +1,6 @@
 ---
 interface Story {
+	isPrivatePreview?: boolean;
 	label?: string;
 	headline: string;
 	dek?: string;
@@ -29,7 +30,7 @@ const { primaryStory, secondaryStories, developmentOnly = false } = Astro.props;
 			<p class="features-section__eyebrow">Ideas worth following</p>
 			<h2 id="features-section-title">Features</h2>
 		</div>
-		{developmentOnly && <p class="features-section__development-note">Development-only section sample</p>}
+		{developmentOnly && <p class="features-section__development-note">{primaryStory.isPrivatePreview ? 'Unpublished draft · Secondary stories are development samples' : 'Development-only section sample'}</p>}
 	</header>
 
 	<article class="feature-primary" aria-labelledby="feature-primary-headline">

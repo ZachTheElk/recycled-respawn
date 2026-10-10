@@ -13,6 +13,7 @@ const articles = defineCollection({
 				provenance: z.enum(['capture', 'official', 'licensed', 'custom']),
 				sourceUrl: z.string().url().optional(),
 				license: z.string().optional(),
+				licenseUrl: z.string().url().optional(),
 			})
 			.superRefine((heroData, context) => {
 				if (['official', 'licensed'].includes(heroData.provenance) && !heroData.sourceUrl) {

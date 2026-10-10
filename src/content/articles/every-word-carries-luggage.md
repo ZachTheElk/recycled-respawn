@@ -6,6 +6,15 @@ section: "features"
 type: "article"
 publishedAt: "2026-10-10T12:00:00-04:00"
 draft: true
+hero:
+  image: "./every-word-carries-luggage/platos-cave.jpg"
+  alt: "Illustration of Plato’s Allegory of the Cave, showing chained prisoners watching shadows while figures and a fire stand behind them and the outside world appears beyond the cave."
+  caption: "An Illustration of The Allegory of the Cave, from Plato’s Republic."
+  credit: "4edges, via Wikimedia Commons. Uncropped; resized and converted to WebP for display."
+  provenance: "licensed"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File:An_Illustration_of_The_Allegory_of_the_Cave,_from_Plato%E2%80%99s_Republic.jpg"
+  license: "CC BY-SA 4.0"
+  licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
 ---
 
 ## 1. The cave, doubled

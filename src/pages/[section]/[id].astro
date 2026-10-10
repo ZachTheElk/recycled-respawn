@@ -94,8 +94,16 @@ const socialImage = !isPrivatePreview && data.hero ? new URL(data.hero.image.src
 							{data.hero.caption && <span>{data.hero.caption}</span>}
 							<span class="article-hero__credit">
 								{data.hero.credit} Provenance: {data.hero.provenance}.
-								{data.hero.sourceUrl && <a href={data.hero.sourceUrl}>Source</a>}
-								{data.hero.license && ` License: ${data.hero.license}.`}
+								{data.hero.sourceUrl && <>{' '}<a href={data.hero.sourceUrl}>Source</a></>}
+								{data.hero.license && (
+								<>
+									{' License: '}
+									{data.hero.licenseUrl ? (
+										<a href={data.hero.licenseUrl}>{data.hero.license}</a>
+									) : data.hero.license}
+									{'.'}
+								</>
+							)}
 							</span>
 						</figcaption>
 					</figure>

@@ -13,6 +13,7 @@ export interface StoryImage {
 }
 
 export interface NormalizedStory {
+	isPrivatePreview?: boolean;
 	id: string;
 	section: ArticleSection;
 	displaySection: string;

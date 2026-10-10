@@ -1,5 +1,5 @@
 import { getCollection } from 'astro:content';
-import { DEVELOPMENT_FIXTURE_ID } from './content-foundation';
+import { DEVELOPMENT_FIXTURE_ID, isPrivatePreviewArticle } from './content-foundation';
 import { homepageDevelopmentRecords } from './homepage-development-records';
 import {
 	estimateReadTime,
@@ -28,7 +28,13 @@ export const homepageCuration = {
 	},
 } as const;
 
+// Only this approved draft and slot may replace production curation during preview.
+const homepagePreviewCuration = { featuresPrimary: 'every-word-carries-luggage' } as const;
+
 function normalizeArticle(article: ArticleEntry): NormalizedStory {
+	const isFixture = article.id === DEVELOPMENT_FIXTURE_ID;
+	const isPrivatePreview = article.data.draft && !isFixture;
+	const date = formatArticleDate(article.data.publishedAt);
 	return {
 		id: article.id,
 		section: article.data.section,
@@ -38,12 +44,13 @@ function normalizeArticle(article: ArticleEntry): NormalizedStory {
 		headline: article.data.title,
 		dek: article.data.dek,
 		author: article.data.author,
-		publicationDate: `Development fixture date: ${formatArticleDate(article.data.publishedAt)}`,
+		publicationDate: isFixture ? `Development fixture date: ${date}` : isPrivatePreview ? `Draft snapshot ${date}` : date,
 		publicationDatetime: article.data.publishedAt.toISOString(),
-		readTime: `${estimateReadTime(article.body ?? '')} min read fixture`,
+		readTime: `${estimateReadTime(article.body ?? '')} min read${isFixture ? ' fixture' : ''}`,
 		href: getArticleUrl(article),
 		image: article.data.hero ? { src: article.data.hero.image.src, alt: article.data.hero.alt } : undefined,
-		developmentOnly: article.id === DEVELOPMENT_FIXTURE_ID,
+		developmentOnly: isFixture,
+		isPrivatePreview,
 	};
 }
 
@@ -90,6 +97,15 @@ export async function getHomepageStories() {
 		});
 	}
 
+	let featuresPrimaryStory = requireStory(stories, homepageCuration.features.primary, 'features.primary');
+	if (import.meta.env.DEV || process.env.CONTEXT === 'deploy-preview') {
+		const previewArticle = articles.find((article) => article.id === homepagePreviewCuration.featuresPrimary);
+		if (!previewArticle || !previewArticle.data.draft || previewArticle.data.section !== 'features' || !isPrivatePreviewArticle(previewArticle.id)) {
+			throw new Error('Features homepage preview requires its approved, allowlisted Features draft.');
+		}
+		featuresPrimaryStory = normalizeArticle(previewArticle);
+	}
+
 	return {
 		featuredStory: requireStory(stories, homepageCuration.featured, 'featured'),
 		newestColumn: requireStory(stories, homepageCuration.column, 'column'),
@@ -106,7 +122,7 @@ export async function getHomepageStories() {
 			),
 		},
 		featuresSection: {
-			primaryStory: requireStory(stories, homepageCuration.features.primary, 'features.primary'),
+			primaryStory: featuresPrimaryStory,
 			secondaryStories: homepageCuration.features.secondary.map((id, index) =>
 				requireStory(stories, id, `features.secondary[${index}]`),
 			),

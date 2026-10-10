@@ -1,5 +1,9 @@
 ---
+import { Image } from 'astro:assets';
+import type { StoryImage } from '../lib/articles';
+
 interface Story {
+	isPrivatePreview?: boolean;
 	headline: string;
 	dek?: string;
 	author: string;
@@ -11,10 +15,7 @@ interface Story {
 }
 
 interface CultureLead extends Story {
-	image: {
-		src?: string;
-		alt: string;
-	};
+	image: StoryImage;
 }
 
 interface Props {
@@ -32,7 +33,7 @@ const { leadStory, briefs, developmentOnly = false } = Astro.props;
 			<p class="culture-section__eyebrow">Section</p>
 			<h2 id="culture-section-title">Culture</h2>
 		</div>
-		{developmentOnly && <p class="culture-section__development-note">Development-only section sample</p>}
+		{developmentOnly && <p class="culture-section__development-note">{leadStory.isPrivatePreview ? 'Unpublished draft · Briefs are development samples' : 'Development-only section sample'}</p>}
 	</header>
 
 	<article class="culture-lead" aria-labelledby="culture-lead-headline">
@@ -59,7 +60,9 @@ const { leadStory, briefs, developmentOnly = false } = Astro.props;
 
 		<figure class="culture-lead__media">
 			{
-				leadStory.image.src ? (
+				leadStory.image.asset ? (
+					<Image style="height: auto;" src={leadStory.image.asset} alt={leadStory.image.alt} width={720} widths={[360, 540, 720]} sizes="(max-width: 46rem) calc(100vw - 3.625rem), 24vw" loading="lazy" decoding="async" />
+				) : leadStory.image.src ? (
 					<img src={leadStory.image.src} alt={leadStory.image.alt} loading="lazy" decoding="async" />
 				) : (
 					<div class="culture-image-placeholder" aria-hidden="true">
@@ -69,6 +72,15 @@ const { leadStory, briefs, developmentOnly = false } = Astro.props;
 				)
 			}
 			{!leadStory.image.src && <figcaption>{leadStory.image.alt}</figcaption>}
+			{leadStory.image.credit && (
+				<figcaption>
+					{leadStory.image.credit.replace('Uncropped;', 'Original source uncropped;')}
+					{leadStory.image.sourceUrl && <>{' '}<a href={leadStory.image.sourceUrl}>Source</a></>}
+					{leadStory.image.license && <>{' License: '}{leadStory.image.licenseUrl ? <a href={leadStory.image.licenseUrl}>{leadStory.image.license}</a> : leadStory.image.license}{'.'}</>}
+					{' Card display: 3:2 crop.'}
+				</figcaption>
+			)}
+
 		</figure>
 	</article>
 

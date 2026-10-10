@@ -1,3 +1,4 @@
+import type { ImageMetadata } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 
 export type ArticleEntry = CollectionEntry<'articles'>;
@@ -8,6 +9,11 @@ export type ArticleSection = (typeof ARTICLE_SECTIONS)[number];
 export type ArticleType = ArticleEntry['data']['type'];
 
 export interface StoryImage {
+	asset?: ImageMetadata;
+	credit?: string;
+	sourceUrl?: string;
+	license?: string;
+	licenseUrl?: string;
 	src?: string;
 	alt: string;
 }

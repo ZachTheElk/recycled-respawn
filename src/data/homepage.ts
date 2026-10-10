@@ -28,8 +28,11 @@ export const homepageCuration = {
 	},
 } as const;
 
-// Only this approved draft and slot may replace production curation during preview.
-const homepagePreviewCuration = { featuresPrimary: 'every-word-carries-luggage' } as const;
+// Only these approved draft/slot pairs may replace production curation during preview.
+const homepagePreviewCuration = {
+	featuresPrimary: 'every-word-carries-luggage',
+	cultureLead: 'can-you-pet-that-dog',
+} as const;
 
 function normalizeArticle(article: ArticleEntry): NormalizedStory {
 	const isFixture = article.id === DEVELOPMENT_FIXTURE_ID;
@@ -48,7 +51,15 @@ function normalizeArticle(article: ArticleEntry): NormalizedStory {
 		publicationDatetime: article.data.publishedAt.toISOString(),
 		readTime: `${estimateReadTime(article.body ?? '')} min read${isFixture ? ' fixture' : ''}`,
 		href: getArticleUrl(article),
-		image: article.data.hero ? { src: article.data.hero.image.src, alt: article.data.hero.alt } : undefined,
+		image: article.data.hero ? {
+			src: article.data.hero.image.src,
+			asset: article.data.hero.image,
+			alt: article.data.hero.alt,
+			credit: article.data.hero.credit,
+			sourceUrl: article.data.hero.sourceUrl,
+			license: article.data.hero.license,
+			licenseUrl: article.data.hero.licenseUrl,
+		} : undefined,
 		developmentOnly: isFixture,
 		isPrivatePreview,
 	};
@@ -98,12 +109,18 @@ export async function getHomepageStories() {
 	}
 
 	let featuresPrimaryStory = requireStory(stories, homepageCuration.features.primary, 'features.primary');
+	let cultureLeadStory = requireStory(stories, homepageCuration.culture.lead, 'culture.lead');
 	if (import.meta.env.DEV || process.env.CONTEXT === 'deploy-preview') {
 		const previewArticle = articles.find((article) => article.id === homepagePreviewCuration.featuresPrimary);
 		if (!previewArticle || !previewArticle.data.draft || previewArticle.data.section !== 'features' || !isPrivatePreviewArticle(previewArticle.id)) {
 			throw new Error('Features homepage preview requires its approved, allowlisted Features draft.');
 		}
 		featuresPrimaryStory = normalizeArticle(previewArticle);
+		const culturePreviewArticle = articles.find((article) => article.id === homepagePreviewCuration.cultureLead);
+		if (!culturePreviewArticle || !culturePreviewArticle.data.draft || culturePreviewArticle.data.section !== 'culture' || !isPrivatePreviewArticle(culturePreviewArticle.id)) {
+			throw new Error('Culture homepage preview requires its approved, allowlisted Culture draft.');
+		}
+		cultureLeadStory = normalizeArticle(culturePreviewArticle);
 	}
 
 	return {
@@ -116,7 +133,7 @@ export async function getHomepageStories() {
 			),
 		},
 		cultureSection: {
-			leadStory: requireStory(stories, homepageCuration.culture.lead, 'culture.lead'),
+			leadStory: cultureLeadStory,
 			briefs: homepageCuration.culture.briefs.map((id, index) =>
 				requireStory(stories, id, `culture.briefs[${index}]`),
 			),

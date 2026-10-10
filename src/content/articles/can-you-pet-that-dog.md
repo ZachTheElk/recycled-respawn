@@ -6,6 +6,15 @@ section: "culture"
 type: "article"
 publishedAt: "2026-10-10T18:00:00-04:00"
 draft: true
+hero:
+  image: "./can-you-pet-that-dog/dog-in-water.jpg"
+  alt: "Yellow-brown dog, looking directly toward the camera, waiting for someone to pet them."
+  caption: "Liver yellow dog in the water looking at viewer at golden hour in Don Det, Laos."
+  credit: "Basile Morin, via Wikimedia Commons. Uncropped; resized and converted to WebP for display."
+  provenance: "licensed"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File:Liver_yellow_dog_in_the_water_looking_at_viewer_at_golden_hour_in_Don_Det_Laos.jpg"
+  license: "CC BY-SA 4.0"
+  licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
 ---
 
 My most recent session with _Star Wars Zero Company_, I loaded in and found Hawks asleep on the couch, having apparently read a recent mission report. I gain control of Hawks, stumble out of the office, and think: damn, wouldn't it be cool if there was something right here waiting for me to pet? In that moment, I realized I was part of the problem.

@@ -5,6 +5,7 @@ export const PRIVATE_PREVIEW_ARTICLE_IDS = [
 	'every-word-carries-luggage',
 	'can-you-pet-that-dog',
 	'just-enough-rope',
+	'late-doesnt-mean-secondary',
 ] as const;
 
 export function isPrivatePreviewArticle(articleId: string) {

@@ -83,8 +83,12 @@ a {
 .brand-mark-slot {
 	flex: 0 0 clamp(3rem, 7vw, 4.75rem);
 	aspect-ratio: 1;
-	border: 1px dashed rgba(255, 255, 255, 0.32);
-	background: rgba(255, 255, 255, 0.04);
+}
+
+.brand-mark-slot img {
+	display: block;
+	width: 100%;
+	height: auto;
 }
 
 .wordmark {

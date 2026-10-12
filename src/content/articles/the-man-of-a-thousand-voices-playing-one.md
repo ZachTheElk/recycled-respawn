@@ -11,7 +11,7 @@ hero:
   image: "./the-man-of-a-thousand-voices-playing-one/baker-hero.jpg"
   alt: "Dee Bradley Baker smiling and speaking into a microphone, wearing glasses."
   caption: "Dee Bradley Baker."
-  credit: "Photo by Gage Skidmore, licensed under CC BY-SA 3.0, via Wikimedia Commons. Supplied landscape crop; resized and converted to WebP for display."
+  credit: "Photo by Gage Skidmore, licensed under CC BY-SA 3.0, via Wikimedia Commons."
   provenance: "licensed"
   sourceUrl: "https://commons.wikimedia.org/wiki/File:Dee_Bradley_Baker_by_Gage_Skidmore.jpg"
   license: "CC BY-SA 3.0"

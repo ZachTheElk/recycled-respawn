@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import SiteFooter from '../../components/SiteFooter.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
-import { DEVELOPMENT_FIXTURE_ID } from '../../data/content-foundation';
 import Layout from '../../layouts/Layout.astro';
 import {
 	ARTICLE_SECTIONS,
@@ -37,14 +36,10 @@ export async function getStaticPaths() {
 
 	return ARTICLE_SECTIONS.map((section) => {
 		const publishedArticles = getSectionArticles(allArticles, section);
-		const reviewFixture =
-			(import.meta.env.DEV || process.env.CONTEXT === 'deploy-preview') && section === 'features'
-				? allArticles.filter((article) => article.id === DEVELOPMENT_FIXTURE_ID)
-				: [];
 
 		return {
 			params: { section },
-			props: { section, articles: [...reviewFixture, ...publishedArticles] },
+			props: { section, articles: publishedArticles },
 		};
 	});
 }
@@ -82,7 +77,6 @@ const canonicalUrl = new URL(`/${section}/`, Astro.site);
 				{articles.length > 0 ? (
 					<ol class="story-list">
 						{articles.map((article, index) => {
-							const isDevelopmentFixture = article.id === DEVELOPMENT_FIXTURE_ID;
 							return (
 								<li>
 									<article class="story-entry">
@@ -90,15 +84,15 @@ const canonicalUrl = new URL(`/${section}/`, Astro.site);
 											{String(index + 1).padStart(2, '0')}
 										</div>
 										<div>
-											<p class:list={['story-entry__label', { 'story-entry__label--fixture': isDevelopmentFixture }]}>
-												{isDevelopmentFixture ? 'Development-only fixture' : article.data.formatLabel ?? article.data.type}
+											<p class="story-entry__label">
+												{article.data.formatLabel ?? article.data.type}
 											</p>
 											<h3><a href={getArticleUrl(article)}>{article.data.title}</a></h3>
 											<p class="story-entry__dek">{article.data.dek}</p>
 											<div class="story-entry__metadata" aria-label="Article details">
 												<span>By {article.data.author}</span>
 												<time datetime={article.data.publishedAt.toISOString()}>
-													{isDevelopmentFixture ? 'Fixture date: ' : ''}{formatArticleDate(article.data.publishedAt)}
+													{formatArticleDate(article.data.publishedAt)}
 												</time>
 												<span>{estimateReadTime(article.body ?? '')} min read</span>
 											</div>
@@ -211,10 +205,6 @@ const canonicalUrl = new URL(`/${section}/`, Astro.site);
 		letter-spacing: 0.08em;
 		line-height: 1.3;
 		text-transform: uppercase;
-	}
-
-	.story-entry__label--fixture {
-		color: #58636b;
 	}
 
 	.story-entry h3 {

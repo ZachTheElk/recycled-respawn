@@ -1,19 +1,17 @@
 ---
-interface EditorialImage {
-	src?: string;
-	alt: string;
-}
+import { Image } from 'astro:assets';
+import type { StoryImage } from '../lib/articles';
 
 interface Props {
 	section: string;
 	headline: string;
-	dek: string;
+	dek?: string;
 	author: string;
 	publicationDate: string;
 	publicationDatetime?: string;
 	readTime: string;
 	href?: string | null;
-	image: EditorialImage;
+	image?: StoryImage;
 	developmentOnly?: boolean;
 }
 
@@ -42,19 +40,19 @@ const {
 	</header>
 
 	<div class="featured-story__body">
-		<figure class="featured-story__media">
-			{
-				image.src ? (
-					<img src={image.src} alt={image.alt} loading="eager" decoding="async" fetchpriority="high" />
-				) : (
-					<div class="featured-story__image-placeholder" aria-hidden="true">
-						<span>Development image well</span>
-						<small>16:9 crop area</small>
-					</div>
-				)
-			}
-			{!image.src && <figcaption>{image.alt}</figcaption>}
-		</figure>
+		{image && <figure class="featured-story__media">
+			{image.asset ? (
+				<Image style="height: auto;" src={image.asset} alt={image.alt} width={720} widths={[360, 540, 720]} sizes="(max-width: 46rem) calc(100vw - 3.625rem), (max-width: 75rem) 65vw, 36vw" loading="eager" decoding="async" fetchpriority="high" />
+			) : image.src && (
+				<img src={image.src} alt={image.alt} loading="eager" decoding="async" />
+			)}
+			{image.credit && <figcaption>
+				{image.credit.replace('Uncropped;', 'Original source uncropped;')}
+				{image.sourceUrl && <>{' '}<a href={image.sourceUrl}>Source</a></>}
+				{image.license && <>{' License: '}{image.licenseUrl ? <a href={image.licenseUrl}>{image.license}</a> : image.license}{'.'}</>}
+				{' Card display: 16:9 crop.'}
+			</figcaption>}
+		</figure>}
 
 		<div class="featured-story__copy">
 			<p class="featured-story__section">{section}</p>
@@ -133,34 +131,11 @@ const {
 		border-right: 1px solid var(--shell-gray-200);
 	}
 
-	.featured-story__media img,
-	.featured-story__image-placeholder {
+	.featured-story__media img {
 		display: block;
 		width: 100%;
 		aspect-ratio: 16 / 9;
 		object-fit: cover;
-	}
-
-	.featured-story__image-placeholder {
-		display: grid;
-		place-content: center;
-		gap: 0.15rem;
-		padding: 1rem;
-		background:
-			linear-gradient(135deg, rgba(36, 85, 125, 0.08), rgba(8, 19, 31, 0.16)),
-			#cbd2d5;
-		border: 1px dashed #89969e;
-		color: #44535d;
-		text-align: center;
-	}
-
-	.featured-story__image-placeholder span {
-		font-weight: 700;
-		letter-spacing: 0.04em;
-	}
-
-	.featured-story__image-placeholder small {
-		font-size: 0.8rem;
 	}
 
 	.featured-story__media figcaption {

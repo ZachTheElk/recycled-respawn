@@ -31,23 +31,9 @@ export interface NormalizedStory {
 	publicationDate: string;
 	publicationDatetime: string;
 	readTime: string;
-	// null explicitly identifies development records that have no public article route.
-	href: string | null;
+	href: string;
 	image?: StoryImage;
 	developmentOnly: boolean;
-}
-
-export interface HomepageDevelopmentRecord {
-	id: string;
-	section: ArticleSection;
-	type: ArticleType;
-	formatLabel?: string;
-	title: string;
-	dek?: string;
-	author: 'Development sample — not ZachTheElk';
-	publishedAt: Date;
-	readTimeMinutes: number;
-	image?: StoryImage;
 }
 
 export function getArticleUrl(article: Pick<ArticleEntry, 'id' | 'data'>) {

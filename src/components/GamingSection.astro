@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets';
+import type { StoryImage } from '../lib/articles';
+
 interface Story {
 	headline: string;
 	dek?: string;
@@ -11,10 +14,7 @@ interface Story {
 }
 
 interface LeadStory extends Story {
-	image: {
-		src?: string;
-		alt: string;
-	};
+	image?: StoryImage;
 }
 
 interface Props {
@@ -34,19 +34,19 @@ const { leadStory, supportingStories, developmentOnly = false } = Astro.props;
 
 	<div class="gaming-section__stories">
 		<article class="gaming-lead" aria-labelledby="gaming-lead-headline">
-			<figure class="gaming-lead__media">
-				{
-					leadStory.image.src ? (
-						<img src={leadStory.image.src} alt={leadStory.image.alt} loading="lazy" decoding="async" />
-					) : (
-						<div class="gaming-image-placeholder" aria-hidden="true">
-							<span>Development image well</span>
-							<small>16:9 crop area</small>
-						</div>
-					)
-				}
-				{!leadStory.image.src && <figcaption>{leadStory.image.alt}</figcaption>}
-			</figure>
+			{leadStory.image && <figure class="gaming-lead__media">
+				{leadStory.image.asset ? (
+					<Image style="height: auto;" src={leadStory.image.asset} alt={leadStory.image.alt} width={720} widths={[360, 540, 720]} sizes="(max-width: 46rem) calc(100vw - 3.625rem), (max-width: 75rem) 65vw, 36vw" loading="lazy" decoding="async" />
+				) : leadStory.image.src && (
+					<img src={leadStory.image.src} alt={leadStory.image.alt} loading="lazy" decoding="async" />
+				)}
+				{leadStory.image.credit && <figcaption>
+					{leadStory.image.credit.replace('Uncropped;', 'Original source uncropped;')}
+					{leadStory.image.sourceUrl && <>{' '}<a href={leadStory.image.sourceUrl}>Source</a></>}
+					{leadStory.image.license && <>{' License: '}{leadStory.image.licenseUrl ? <a href={leadStory.image.licenseUrl}>{leadStory.image.license}</a> : leadStory.image.license}{'.'}</>}
+					{' Card display: 16:9 crop.'}
+				</figcaption>}
+			</figure>}
 
 			<div class="gaming-lead__copy">
 				<p class="story-kicker">Lead story</p>
@@ -75,7 +75,7 @@ const { leadStory, supportingStories, developmentOnly = false } = Astro.props;
 				supportingStories.map((story, index) => (
 					<article class="gaming-support__story" aria-labelledby={`gaming-support-headline-${index}`}>
 						<div class="gaming-support__labels">
-							<p class="story-kicker">{story.type === 'review' ? 'Review layout sample' : 'More Gaming'}</p>
+							<p class="story-kicker">{story.type === 'review' ? 'Review' : 'More Gaming'}</p>
 						</div>
 						<h3 id={`gaming-support-headline-${index}`}>
 							{story.href ? <a href={story.href}>{story.headline}</a> : story.headline}
@@ -151,37 +151,15 @@ const { leadStory, supportingStories, developmentOnly = false } = Astro.props;
 		margin: 0;
 	}
 
-	.gaming-lead__media img,
-	.gaming-image-placeholder {
+	.gaming-lead__media img {
 		display: block;
 		width: 100%;
 		aspect-ratio: 16 / 9;
 		object-fit: cover;
 	}
 
-	.gaming-image-placeholder {
-		display: grid;
-		place-content: center;
-		gap: 0.1rem;
-		padding: 1rem;
-		background: #d7dcde;
-		border: 1px dashed #89969e;
-		color: #4b5962;
-		text-align: center;
-	}
-
-	.gaming-image-placeholder span {
-		font-size: 0.9rem;
-		font-weight: 700;
-		letter-spacing: 0.035em;
-	}
-
-	.gaming-image-placeholder small,
 	.gaming-lead__media figcaption {
 		font-size: 0.76rem;
-	}
-
-	.gaming-lead__media figcaption {
 		margin-top: 0.45rem;
 		color: var(--shell-gray-500);
 		line-height: 1.4;

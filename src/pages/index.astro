@@ -1,7 +1,6 @@
 ---
 import FeaturedStory from '../components/FeaturedStory.astro';
 import GamingSection from '../components/GamingSection.astro';
-import CultureSection from '../components/CultureSection.astro';
 import FeaturesSection from '../components/FeaturesSection.astro';
 import NewestColumn from '../components/NewestColumn.astro';
 import SiteFooter from '../components/SiteFooter.astro';
@@ -12,58 +11,38 @@ import { getCollection } from 'astro:content';
 import { getRecentArticles } from '../lib/articles';
 import Layout from '../layouts/Layout.astro';
 
-const { featuredStory, newestColumn, gamingSection, cultureSection, featuresSection } = await getHomepageStories();
+const { featuredStory, newestColumn, gamingSection, featuresSection } = await getHomepageStories();
 const recentArticles = getRecentArticles(await getCollection('articles'), 4);
 const canonicalUrl = new URL('/', Astro.site);
-
-const featuredProps = {
-	...featuredStory,
-	section: featuredStory.displaySection,
-	image: featuredStory.image ?? { alt: 'Development-only image placeholder; final editorial image has not been selected.' },
-};
-
-const columnProps = { ...newestColumn, label: 'Newest Column', section: newestColumn.formatLabel ?? 'Opinion' };
-
-const gamingProps = {
-	...gamingSection,
-	leadStory: {
-		...gamingSection.leadStory,
-		image: gamingSection.leadStory.image ?? { alt: 'Development-only Gaming image placeholder; no editorial image has been selected.' },
-	},
-	developmentOnly: true,
-};
-
-const cultureProps = {
-	...cultureSection,
-	leadStory: {
-		...cultureSection.leadStory,
-		image: cultureSection.leadStory.image ?? { alt: 'Development-only Culture image placeholder; no editorial image has been selected.' },
-	},
-	briefs: cultureSection.briefs.map((story) => ({ ...story, label: story.formatLabel })),
-	developmentOnly: true,
-};
-
-const featuresProps = {
-	primaryStory: { ...featuresSection.primaryStory, label: featuresSection.primaryStory.formatLabel },
-	secondaryStories: featuresSection.secondaryStories.map((story) => ({ ...story, label: story.formatLabel })),
-	developmentOnly: true,
-};
+const visibleStories = [featuredStory, newestColumn, gamingSection.leadStory, ...gamingSection.supportingStories, featuresSection.primaryStory].filter(Boolean);
+const hasPrivateDrafts = visibleStories.some((story) => story?.isPrivatePreview);
 ---
 
-<Layout {canonicalUrl}>
+<Layout {canonicalUrl} noindex={hasPrivateDrafts}>
 	<a class="skip-link" href="#main-content">Skip to main content</a>
 	<div class="site-frame">
 		<SiteHeader />
 		<div class="publication-grid">
 			<main class="main-region" id="main-content" tabindex="-1">
-				<FeaturedStory {...featuredProps} />
-				<NewestColumn {...columnProps} />
-				<GamingSection {...gamingProps} />
-				<CultureSection {...cultureProps} />
-				<FeaturesSection {...featuresProps} />
+				{hasPrivateDrafts && <p class="homepage-notice">Private preview · Unpublished drafts</p>}
+				{!featuredStory && <h1>Recycled Respawn</h1>}
+				{visibleStories.length === 0 && <p>Stories will appear here as they are published.</p>}
+				{featuredStory && <FeaturedStory {...featuredStory} section={featuredStory.displaySection} />}
+				{newestColumn && <NewestColumn {...newestColumn} label="Newest Column" section={newestColumn.formatLabel ?? 'Opinion'} />}
+				{gamingSection.leadStory && <GamingSection leadStory={gamingSection.leadStory} supportingStories={gamingSection.supportingStories} />}
+				{featuresSection.primaryStory && <FeaturesSection primaryStory={{ ...featuresSection.primaryStory, label: featuresSection.primaryStory.formatLabel }} secondaryStories={[]} />}
 			</main>
 			<RightRail {recentArticles} />
 		</div>
 		<SiteFooter />
 	</div>
 </Layout>
+
+<style>
+	.homepage-notice {
+		margin: 0 0 1rem;
+		color: var(--shell-blue-700);
+		font-size: 0.8rem;
+		font-weight: 700;
+	}
+</style>

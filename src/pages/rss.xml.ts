@@ -1,7 +1,6 @@
 import rss from '@astrojs/rss';
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
-import { DEVELOPMENT_FIXTURE_ID } from '../data/content-foundation';
 import { getArticleUrl, getPublishedArticles } from '../lib/articles';
 
 export const GET: APIRoute = async ({ site }) => {
@@ -14,7 +13,6 @@ export const GET: APIRoute = async ({ site }) => {
 		description: 'An independent gaming and culture publication.',
 		site,
 		items: getPublishedArticles(articles)
-			.filter((article) => article.id !== DEVELOPMENT_FIXTURE_ID)
 			.sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
 			.map((article) => ({
 				title: article.data.title,

@@ -1,0 +1,70 @@
+---
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="404 | Recycled Respawn" description="This page didn't make the checkpoint." noindex>
+	<a class="skip-link" href="#main-content">Skip to main content</a>
+	<div class="site-frame">
+		<SiteHeader />
+		<main class="not-found" id="main-content" tabindex="-1">
+			<div class="not-found__content">
+				<h1 aria-label="404: Page not found">404</h1>
+				<p>This page didn't make the checkpoint.</p>
+				<a class="respawn" href="/">Respawn</a>
+			</div>
+		</main>
+		<SiteFooter />
+	</div>
+</Layout>
+
+<style>
+	.not-found {
+		display: grid;
+		place-items: center;
+		min-height: 60vh;
+		padding: clamp(4rem, 8vw, 7rem) 1rem;
+		text-align: center;
+	}
+
+	.not-found__content {
+		max-width: 43rem;
+	}
+
+	.not-found h1 {
+		margin: 0;
+		color: var(--shell-navy-900);
+		font-family: Georgia, 'Times New Roman', serif;
+		font-size: clamp(6rem, 18vw, 12rem);
+		line-height: 1;
+		letter-spacing: -0.035em;
+	}
+
+	.not-found p {
+		margin: 1.5rem 0 2rem;
+		font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+		line-height: 1.45;
+	}
+
+	.respawn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 2.75rem;
+		padding: 0.75rem 1.75rem;
+		background: var(--shell-navy-900);
+		color: #fff;
+		font-weight: 700;
+		text-decoration: none;
+	}
+
+	.respawn:hover {
+		background: var(--shell-blue-700);
+	}
+
+	.respawn:focus-visible {
+		outline: 0.2rem solid var(--shell-blue-700);
+		outline-offset: 0.25rem;
+	}
+</style>

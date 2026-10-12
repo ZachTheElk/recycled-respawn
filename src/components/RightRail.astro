@@ -1,7 +1,7 @@
 ---
 import type { ArticleEntry, ArticleType } from '../lib/articles';
 import { formatArticleDate, formatArticleSection, getArticleUrl } from '../lib/articles';
-import { currentlyPlaying } from '../data/currently-playing';
+import { playerStatus } from '../data/currently-playing';
 import { siteUpdate } from '../data/site-update';
 
 interface Props {
@@ -14,21 +14,18 @@ const formatType = (type: ArticleType) => type.charAt(0).toUpperCase() + type.sl
 
 <aside class="right-rail" aria-label="Publication notes and recent activity">
 	<div class="rail-modules">
-		<section class="rail-module currently-playing" aria-labelledby="currently-playing-title">
-			<p class="rail-kicker">On the desk</p>
-			<h2 id="currently-playing-title">Currently Playing</h2>
+		<section class="rail-module player-status" aria-labelledby="player-status-title">
+			<h2 id="player-status-title">PLAYER STATUS //</h2>
 			<ul class="playing-list">
-				{currentlyPlaying.map((game) => (
+				{playerStatus.map((row) => (
 					<li>
-						<h3>{game.title}</h3>
-						{game.platform && <p class="playing-platform">{game.platform}</p>}
-						{game.status && <p class="playing-status">{game.status}</p>}
-						{game.context && <p class="playing-context">{game.context}</p>}
+						<h3 class="player-status-label">{row.label}</h3>
+						{row.title && <p class="player-status-game">{row.title}</p>}
+						<p class="playing-context">{row.text}</p>
 					</li>
 				))}
 			</ul>
 		</section>
-
 		<section class="rail-module recent-publications" aria-labelledby="recent-publications-title">
 			<p class="rail-kicker">From the archive</p>
 			<h2 id="recent-publications-title">Latest</h2>
@@ -48,12 +45,34 @@ const formatType = (type: ArticleType) => type.charAt(0).toUpperCase() + type.sl
 		</section>
 
 		<section class="rail-module site-update" aria-labelledby="site-update-title">
-			<p class="rail-kicker">{siteUpdate.developmentOnly ? 'Development preview' : 'Publication note'}</p>
-			<h2 id="site-update-title">Site Update</h2>
+			<p class="rail-kicker">{siteUpdate.developmentOnly ? 'Launch copy · Pre-launch preview' : 'Publication note'}</p>
+			<h2 id="site-update-title">SITE UPDATE //</h2>
 			<h3>{siteUpdate.title}</h3>
-			<time datetime={siteUpdate.date.toISOString()}>{formatArticleDate(siteUpdate.date)}</time>
+			{siteUpdate.date && <time datetime={siteUpdate.date.toISOString()}>{formatArticleDate(siteUpdate.date)}</time>}
 			<p>{siteUpdate.text}</p>
 			{siteUpdate.href && siteUpdate.linkLabel && <a class="site-update-link" href={siteUpdate.href}>{siteUpdate.linkLabel}</a>}
 		</section>
 	</div>
 </aside>
+
+
+<style>
+	.player-status-label {
+		color: var(--shell-blue-700);
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 0.7rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		line-height: 1.3;
+		text-transform: uppercase;
+	}
+
+	.player-status-game {
+		margin: 0.45rem 0 0;
+		font-family: Georgia, 'Times New Roman', serif;
+		font-size: 1.08rem;
+		font-weight: 700;
+		line-height: 1.2;
+		overflow-wrap: anywhere;
+	}
+</style>

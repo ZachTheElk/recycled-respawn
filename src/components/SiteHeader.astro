@@ -1,6 +1,13 @@
+---
+import { Image } from 'astro:assets';
+import rrMark from '../assets/rr-mark-transparent.png';
+---
+
 <header class="site-header">
 	<div class="masthead-row">
-		<div class="brand-mark-slot" aria-hidden="true"></div>
+		<div class="brand-mark-slot" aria-hidden="true">
+			<Image src={rrMark} alt="" widths={[52, 76, 104, 152]} sizes="(max-width: 46rem) 52px, (max-width: 68rem) 7vw, 76px" />
+		</div>
 		<a class="wordmark" href="/" aria-label="Recycled Respawn home">RECYCLED RESPAWN</a>
 	</div>
 

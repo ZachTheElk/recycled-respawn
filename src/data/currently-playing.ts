@@ -1,15 +1,22 @@
-export interface CurrentlyPlayingEntry {
-	title: string;
-	platform?: string;
-	status?: string;
-	context?: string;
+export interface PlayerStatusEntry {
+	label: 'Now Playing' | 'Just Finished' | 'Stuck On' | 'Up Next';
+	title?: string;
+	text: string;
 }
 
-// Manually maintained. Keep this list to the games Zach is genuinely playing lately.
-export const currentlyPlaying: CurrentlyPlayingEntry[] = [
+// Manually maintained editorial status, not live activity. Omit unused rows entirely.
+export const playerStatus: PlayerStatusEntry[] = [
 	{
-		title: 'Star Wars Zero Company',
-		status: 'Campaign in progress',
-		context: 'Current focus; notes may become future coverage.',
+		label: 'Now Playing',
+		title: 'Star Wars: Galactic Racer',
+		text: 'Takes me right back to playing Star Wars: Episode I Racer as a kid.',
+	},
+	{
+		label: 'Stuck On',
+		text: 'Finding time to return to Valheim.',
+	},
+	{
+		label: 'Up Next',
+		text: 'Preparing for GTA VI.',
 	},
 ];

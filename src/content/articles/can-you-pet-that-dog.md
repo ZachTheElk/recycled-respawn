@@ -4,8 +4,8 @@ dek: "The expectation economy of modern games."
 author: "ZachTheElk"
 section: "culture"
 type: "article"
-publishedAt: "2026-10-10T18:00:00-04:00"
-draft: true
+publishedAt: "2026-10-17T15:00:01-04:00"
+draft: false
 hero:
   image: "./can-you-pet-that-dog/dog-in-water.jpg"
   alt: "Yellow-brown dog, looking directly toward the camera, waiting for someone to pet them."

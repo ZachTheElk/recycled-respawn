@@ -70,7 +70,7 @@ const { leadStory, supportingStories, developmentOnly = false } = Astro.props;
 			</div>
 		</article>
 
-		<div class="gaming-support" aria-label="More from Gaming">
+		<div class="gaming-support" role="group" aria-label="More from Gaming">
 			{
 				supportingStories.map((story, index) => (
 					<article class="gaming-support__story" aria-labelledby={`gaming-support-headline-${index}`}>

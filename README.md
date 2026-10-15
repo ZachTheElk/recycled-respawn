@@ -14,7 +14,7 @@ npm run build
 
 Publication-ready Markdown articles live in `src/content/articles/`. Article URLs follow `/{section}/{id}/`, such as `/gaming/example-article/`.
 
-The repository currently includes clearly labeled development fixtures and synthetic homepage records. They are intentional scaffolding for testing layouts, routing, metadata, and the content pipeline; they are not published editorial work and must be replaced or removed before launch.
+The launch candidate contains seven genuine Zach-authored articles configured for October 17, 2026. Homepage placement is curated in `src/data/homepage.ts`; Latest, section listings, and RSS derive from published article records. This candidate does not authorize production publication.
 
 ## Workflow and production safety
 

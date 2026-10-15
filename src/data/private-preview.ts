@@ -1,12 +1,5 @@
-export const PRIVATE_PREVIEW_ARTICLE_IDS = [
-	'every-word-carries-luggage',
-	'can-you-pet-that-dog',
-	'just-enough-rope',
-	'late-doesnt-mean-secondary',
-	'the-man-of-a-thousand-voices-playing-one',
-	'galactic-racer-review',
-	'never-trust-the-quiet-ones',
-] as const;
+// The seven launch articles are public in this candidate. Future drafts require explicit opt-in.
+export const PRIVATE_PREVIEW_ARTICLE_IDS: readonly string[] = [];
 
 export function isPrivatePreviewArticle(articleId: string) {
 	return PRIVATE_PREVIEW_ARTICLE_IDS.some((previewId) => previewId === articleId);

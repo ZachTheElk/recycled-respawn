@@ -5,8 +5,8 @@ author: "ZachTheElk"
 section: "gaming"
 type: "review"
 formatLabel: "Review"
-publishedAt: "2026-10-15T12:00:00-04:00"
-draft: true
+publishedAt: "2026-10-17T15:00:05-04:00"
+draft: false
 hero:
   image: "./galactic-racer-review/galactichero.jpg"
   alt: "Podracers skim across shallow water past green ruins and domed buildings beneath a mountain."

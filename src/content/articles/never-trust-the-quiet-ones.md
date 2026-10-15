@@ -5,8 +5,8 @@ author: "ZachTheElk"
 section: "gaming"
 type: "opinion"
 formatLabel: "Opinion"
-publishedAt: "2026-10-15T12:00:00-04:00"
-draft: true
+publishedAt: "2026-10-17T15:00:06-04:00"
+draft: false
 hero:
   image: "./never-trust-the-quiet-ones/roothero.jpg"
   alt: "Stephen Root smiling, wearing glasses and a cap."

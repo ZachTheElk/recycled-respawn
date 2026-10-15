@@ -5,8 +5,8 @@ author: "ZachTheElk"
 section: "gaming"
 type: "opinion"
 formatLabel: "Analysis"
-publishedAt: "2026-10-10T20:00:00-04:00"
-draft: true
+publishedAt: "2026-10-17T15:00:02-04:00"
+draft: false
 hero:
   image: "./just-enough-rope/herowide.webp"
   alt: "Three characters gathered around a glowing blue holographic war table in a dark Star Wars: Zero Company command room."

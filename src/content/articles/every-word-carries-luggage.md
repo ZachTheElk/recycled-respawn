@@ -4,8 +4,8 @@ dek: "People are media. So is the machine. Here's what happens when you plug one
 author: "ZachTheElk"
 section: "features"
 type: "article"
-publishedAt: "2026-10-10T12:00:00-04:00"
-draft: true
+publishedAt: "2026-10-17T15:00:00-04:00"
+draft: false
 hero:
   image: "./every-word-carries-luggage/platos-cave.jpg"
   alt: "Illustration of Plato’s Allegory of the Cave, showing chained prisoners watching shadows while figures and a fire stand behind them and the outside world appears beyond the cave."

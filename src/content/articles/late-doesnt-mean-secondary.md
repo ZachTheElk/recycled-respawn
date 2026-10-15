@@ -5,8 +5,8 @@ author: "ZachTheElk"
 section: "gaming"
 type: "opinion"
 formatLabel: "Analysis"
-publishedAt: "2026-10-10T22:00:00-04:00"
-draft: true
+publishedAt: "2026-10-17T15:00:03-04:00"
+draft: false
 hero:
   image: "./late-doesnt-mean-secondary/heroaura.jpg"
   alt: "Green aurora lights a snowy Valheim settlement, with a rider on an antlered mount silhouetted beside a wooden building."

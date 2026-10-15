@@ -10,13 +10,16 @@ import {
 } from '../lib/articles';
 
 // Homepage placement is editorial curation state, never article frontmatter.
-// Only these explicitly curated, allowlisted drafts are eligible during private review.
+// Drafts require explicit allowlisting during private review; published stories are public.
 export const homepageCuration = {
 	featured: 'can-you-pet-that-dog',
-	column: 'the-man-of-a-thousand-voices-playing-one',
+	column: 'never-trust-the-quiet-ones',
 	gaming: {
 		lead: 'just-enough-rope',
-		supporting: ['late-doesnt-mean-secondary'],
+		supporting: [
+			{ id: 'late-doesnt-mean-secondary', type: 'opinion' },
+			{ id: 'galactic-racer-review', type: 'review' },
+		],
 	},
 	features: {
 		primary: 'every-word-carries-luggage',
@@ -75,7 +78,7 @@ export async function getHomepageStories() {
 		gamingSection: {
 			leadStory: curatedStory(homepageCuration.gaming.lead, 'gaming', 'opinion'),
 			supportingStories: homepageCuration.gaming.supporting
-				.map((id) => curatedStory(id, 'gaming', 'opinion'))
+				.map(({ id, type }) => curatedStory(id, 'gaming', type))
 				.filter((story): story is NormalizedStory => Boolean(story)),
 		},
 		featuresSection: {

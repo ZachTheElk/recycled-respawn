@@ -33,7 +33,7 @@ Some of that feeling is mechanical. The vehicles handle beautifully. You can get
 
 ![A speeder bike rider races along a snowy mountain course behind other racers.](./galactic-racer-review/galacticinline.jpg)
 
-<figcaption>Screenshot courtesy of Secret Mode/Fuse Games. Provenance: official. <a href="https://bespinbulletin.com/these-new-star-wars-galactic-racer-screenshots-are-stunning/">Source</a></figcaption>
+<figcaption>Screenshot courtesy of Secret Mode/Fuse Games</figcaption>
 </figure>
 
 It sustains. That's the thing I keep coming back to. Thirty-plus hours of campaign and scenarios, and it never sagged. I'm bad at finishing games these days. But I was compelled to finish this one. Part of that was Kestar Bool, who has an incredibly punchable face and is a downright asshole, and wanting to beat him absolutely kept me going. But honestly, he was a bonus. The racing was the reason.

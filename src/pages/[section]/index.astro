@@ -89,7 +89,7 @@ const canonicalUrl = new URL(`/${section}/`, Astro.site);
 											</p>
 											<h3><a href={getArticleUrl(article)}>{article.data.title}</a></h3>
 											<p class="story-entry__dek">{article.data.dek}</p>
-											<div class="story-entry__metadata" aria-label="Article details">
+											<div class="story-entry__metadata" role="group" aria-label="Article details">
 												<span>By {article.data.author}</span>
 												<time datetime={article.data.publishedAt.toISOString()}>
 													{formatArticleDate(article.data.publishedAt)}
@@ -191,7 +191,7 @@ const canonicalUrl = new URL(`/${section}/`, Astro.site);
 	}
 
 	.story-entry__number {
-		color: var(--shell-blue-500);
+		color: var(--shell-blue-700);
 		font-size: 0.82rem;
 		font-weight: 700;
 		letter-spacing: 0.08em;

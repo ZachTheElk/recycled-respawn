@@ -72,7 +72,7 @@ const socialImage = !isPrivatePreview && data.hero ? new URL(data.hero.image.src
 					<p class="article-header__label">{data.formatLabel ?? sectionLabel}</p>
 					<h1>{data.title}</h1>
 					<p class="article-header__dek">{data.dek}</p>
-					<div class="article-header__metadata" aria-label="Article details">
+					<div class="article-header__metadata" role="group" aria-label="Article details">
 						<span>By {data.author}</span>
 						<span>
 							{isPrivatePreview ? 'Draft snapshot ' : 'Published '}

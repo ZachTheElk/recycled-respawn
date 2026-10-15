@@ -4,6 +4,7 @@ export const PRIVATE_PREVIEW_ARTICLE_IDS = [
 	'just-enough-rope',
 	'late-doesnt-mean-secondary',
 	'the-man-of-a-thousand-voices-playing-one',
+	'galactic-racer-review',
 ] as const;
 
 export function isPrivatePreviewArticle(articleId: string) {

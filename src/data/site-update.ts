@@ -11,6 +11,6 @@ export interface SiteUpdate {
 export const siteUpdate: SiteUpdate = {
 	title: 'Respawned.',
 	date: new Date('2026-10-17T15:00:00-04:00'),
-	text: 'Recycled Respawn is live. Respawning means getting another shot, so I’m taking mine, writing what I want, at my own pace, without scores, news churn, or content for content’s sake.',
+	text: "Recycled Respawn is live. Respawning means getting another shot, so I'm taking mine. Writing what I want at my own pace, without scores or content for content's sake.",
 	developmentOnly: false,
 };

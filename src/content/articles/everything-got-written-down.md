@@ -33,15 +33,17 @@ It was the funniest sentence in elementary school. It is still funny. The game e
 
 The sentence is flat because the game is a system, and a system only has the one register. Dysentery arrives in the same tone as a broken axle or a stolen ox, because to the machine those are the same kind of thing: an event, drawn from a list, applied to your numbers. What I did not know until recently is that the flatness was researched. When Don Rawitsch, one of the game's creators, rebuilt it at MECC in the mid-1970s, he [calibrated its probabilities from real emigrant diaries](https://www.smithsonianmag.com/innovation/how-you-wound-playing-em-oregon-trailem-computer-class-180959851/), the daily journals of people who actually walked west, reading them for the events themselves and for how often the river or the sickness ought to take someone. The gag has a bibliography. The game read the diaries and turned them into dice.
 
-Patrick Breen kept one of those diaries. He was not even going to Oregon. His party took the cutoff toward California, the Hastings Cutoff, and got snowed in with the Donner Party in November 1846. Breen wrote almost every day from then until rescue, in a shanty, on short rations, in a hand that never once changes its mind about what a sentence is for. Death, disease, weather, hunger, and the habit of writing them down were common to every road west. The catastrophe was not common. Breen recorded his in the same hand as an ordinary journey, which is rather the point. What the game did to the diary form, and what the diary form actually was, is the whole distance between the punchline and the record.
+Patrick Breen kept one of those diaries. He was not even going to Oregon. His party took the cutoff toward California, the Hastings Cutoff, and got snowed in with the Donner Party in November 1846.
 
 <!-- Image provenance: Public domain. Andrew J. Russell, Summit of Sierra Nevada — snow sheds in foreground, Donner Lake in the distance, Central Pacific R.R.; supplied via Wikimedia Commons. Sun Pictures of Rocky Mountain Scenery (1869). -->
 <figure>
 
 ![Historic photograph looking past railroad snow sheds across rocky Sierra Nevada slopes toward Donner Lake.](./everything-got-written-down/donnerlake.jpg)
 
-<figcaption>Donner Lake and the pass, photographed a generation later. The Breens wintered at its eastern end. Andrew J. Russell, 1868. Library of Congress. <a href="https://commons.wikimedia.org/wiki/File:Donner_Lake_and_snow_sheds.jpg">Source</a></figcaption>
+<figcaption>Donner Lake and the pass, photographed a generation later. The Breens wintered at its eastern end. Andrew J. Russell, 1868. Library of Congress. <a href="https://commons.wikimedia.org/wiki/File:Donner_Lake_and_snow_sheds2.jpg">Source</a></figcaption>
 </figure>
+
+Breen wrote almost every day from then until rescue, in a shanty, on short rations, in a hand that never once changes its mind about what a sentence is for. Death, disease, weather, hunger, and the habit of writing them down were common to every road west. The catastrophe was not common. Breen recorded his in the same hand as an ordinary journey, which is rather the point. What the game did to the diary form, and what the diary form actually was, is the whole distance between the punchline and the record.
 
 Here is December 21, 1846, in full working order. Milt Elliot has just come back from the Donner camp with news:
 

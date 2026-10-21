@@ -4,8 +4,8 @@ dek: "Death on the trail was not a full stop. It was a comma in a sentence that 
 author: "ZachTheElk"
 section: "features"
 type: "article"
-publishedAt: "2026-10-21T12:00:00-04:00"
-draft: true
+publishedAt: "2026-10-21T18:02:24-04:00"
+draft: false
 hero:
   image: "./everything-got-written-down/donnerhero.jpg"
   alt: "Close crop of Patrick Breen's handwritten diary, with dark ink across a stained manuscript page."

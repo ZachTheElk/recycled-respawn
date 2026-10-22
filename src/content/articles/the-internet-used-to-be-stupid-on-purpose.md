@@ -4,8 +4,8 @@ dek: "Virality used to be an accident. Then it became an industry."
 author: "ZachTheElk"
 section: "culture"
 type: "article"
-publishedAt: "2026-10-22T19:07:25-04:00"
-draft: true
+publishedAt: "2026-10-22T19:22:38-04:00"
+draft: false
 hero:
   image: "./the-internet-used-to-be-stupid-on-purpose/hero-e.jpg"
   alt: "A heavily distorted, brightly colored composite face wearing glasses, overlaid with a large white letter E."

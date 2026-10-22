@@ -21,8 +21,11 @@ export const homepageCuration = {
 			{ id: 'galactic-racer-review', type: 'review' },
 		],
 	},
+	culture: {
+		lead: 'the-internet-used-to-be-stupid-on-purpose',
+	},
 	features: {
-		primary: 'every-word-carries-luggage',
+		primary: 'everything-got-written-down',
 	},
 } as const;
 
@@ -80,6 +83,9 @@ export async function getHomepageStories() {
 			supportingStories: homepageCuration.gaming.supporting
 				.map(({ id, type }) => curatedStory(id, 'gaming', type))
 				.filter((story): story is NormalizedStory => Boolean(story)),
+		},
+		cultureSection: {
+			leadStory: curatedStory(homepageCuration.culture.lead, 'culture', 'article'),
 		},
 		featuresSection: {
 			primaryStory: curatedStory(homepageCuration.features.primary, 'features', 'article'),

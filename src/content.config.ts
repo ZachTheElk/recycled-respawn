@@ -10,16 +10,16 @@ const articles = defineCollection({
 				alt: z.string().min(1),
 				caption: z.string().optional(),
 				credit: z.string().min(1),
-				provenance: z.enum(['capture', 'official', 'licensed', 'custom']),
+				provenance: z.enum(['capture', 'official', 'licensed', 'custom', 'editorial']),
 				sourceUrl: z.string().url().optional(),
 				license: z.string().optional(),
 				licenseUrl: z.string().url().optional(),
 			})
 			.superRefine((heroData, context) => {
-				if (['official', 'licensed'].includes(heroData.provenance) && !heroData.sourceUrl) {
+				if (['official', 'licensed', 'editorial'].includes(heroData.provenance) && !heroData.sourceUrl) {
 					context.addIssue({
 						code: 'custom',
-						message: 'Official and licensed images require a source URL.',
+						message: 'Official, licensed, and editorial images require a source URL.',
 						path: ['sourceUrl'],
 					});
 				}

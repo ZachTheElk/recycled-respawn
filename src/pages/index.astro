@@ -1,5 +1,6 @@
 ---
 import FeaturedStory from '../components/FeaturedStory.astro';
+import CultureSection from '../components/CultureSection.astro';
 import GamingSection from '../components/GamingSection.astro';
 import FeaturesSection from '../components/FeaturesSection.astro';
 import NewestColumn from '../components/NewestColumn.astro';
@@ -11,10 +12,10 @@ import { getCollection } from 'astro:content';
 import { getRecentArticles } from '../lib/articles';
 import Layout from '../layouts/Layout.astro';
 
-const { featuredStory, newestColumn, gamingSection, featuresSection } = await getHomepageStories();
+const { featuredStory, newestColumn, gamingSection, cultureSection, featuresSection } = await getHomepageStories();
 const recentArticles = getRecentArticles(await getCollection('articles'), 4);
 const canonicalUrl = new URL('/', Astro.site);
-const visibleStories = [featuredStory, newestColumn, gamingSection.leadStory, ...gamingSection.supportingStories, featuresSection.primaryStory].filter(Boolean);
+const visibleStories = [featuredStory, newestColumn, gamingSection.leadStory, ...gamingSection.supportingStories, cultureSection.leadStory, featuresSection.primaryStory].filter(Boolean);
 const hasPrivateDrafts = visibleStories.some((story) => story?.isPrivatePreview);
 ---
 
@@ -30,6 +31,7 @@ const hasPrivateDrafts = visibleStories.some((story) => story?.isPrivatePreview)
 				{featuredStory && <FeaturedStory {...featuredStory} section={featuredStory.displaySection} />}
 				{newestColumn && <NewestColumn {...newestColumn} label="Newest Column" section={newestColumn.formatLabel ?? 'Opinion'} />}
 				{gamingSection.leadStory && <GamingSection leadStory={gamingSection.leadStory} supportingStories={gamingSection.supportingStories} />}
+				{cultureSection.leadStory?.image && <CultureSection leadStory={{ ...cultureSection.leadStory, image: cultureSection.leadStory.image }} briefs={[]} />}
 				{featuresSection.primaryStory && <FeaturesSection primaryStory={{ ...featuresSection.primaryStory, label: featuresSection.primaryStory.formatLabel }} secondaryStories={[]} />}
 			</main>
 			<RightRail {recentArticles} />

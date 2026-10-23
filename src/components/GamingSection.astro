@@ -41,15 +41,13 @@ const { leadStory, supportingStories, developmentOnly = false } = Astro.props;
 					<img src={leadStory.image.src} alt={leadStory.image.alt} loading="lazy" decoding="async" />
 				)}
 				{leadStory.image.credit && <figcaption>
-					{leadStory.image.credit.replace('Uncropped;', 'Original source uncropped;')}
+					{leadStory.image.credit}
 					{leadStory.image.sourceUrl && <>{' '}<a href={leadStory.image.sourceUrl}>Source</a></>}
 					{leadStory.image.license && <>{' License: '}{leadStory.image.licenseUrl ? <a href={leadStory.image.licenseUrl}>{leadStory.image.license}</a> : leadStory.image.license}{'.'}</>}
-					{' Card display: 16:9 crop.'}
 				</figcaption>}
 			</figure>}
 
 			<div class="gaming-lead__copy">
-				<p class="story-kicker">Lead story</p>
 				<h3 id="gaming-lead-headline">
 					{leadStory.href ? <a href={leadStory.href}>{leadStory.headline}</a> : leadStory.headline}
 				</h3>
@@ -74,9 +72,9 @@ const { leadStory, supportingStories, developmentOnly = false } = Astro.props;
 			{
 				supportingStories.map((story, index) => (
 					<article class="gaming-support__story" aria-labelledby={`gaming-support-headline-${index}`}>
-						<div class="gaming-support__labels">
-							<p class="story-kicker">{story.type === 'review' ? 'Review' : 'More Gaming'}</p>
-						</div>
+						{story.type === 'review' && <div class="gaming-support__labels">
+							<p class="story-kicker">Review</p>
+						</div>}
 						<h3 id={`gaming-support-headline-${index}`}>
 							{story.href ? <a href={story.href}>{story.headline}</a> : story.headline}
 						</h3>

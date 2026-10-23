@@ -47,10 +47,9 @@ const {
 				<img src={image.src} alt={image.alt} loading="eager" decoding="async" />
 			)}
 			{image.credit && <figcaption>
-				{image.credit.replace('Uncropped;', 'Original source uncropped;')}
+				{image.credit}
 				{image.sourceUrl && <>{' '}<a href={image.sourceUrl}>Source</a></>}
 				{image.license && <>{' License: '}{image.licenseUrl ? <a href={image.licenseUrl}>{image.license}</a> : image.license}{'.'}</>}
-				{' Card display: 16:9 crop.'}
 			</figcaption>}
 		</figure>}
 

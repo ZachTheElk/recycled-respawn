@@ -35,7 +35,7 @@ const { primaryStory, secondaryStories, developmentOnly = false } = Astro.props;
 
 	<article class="feature-primary" aria-labelledby="feature-primary-headline">
 		<div class="feature-primary__guide">
-			<p class="story-label">{primaryStory.label ?? 'Feature essay'}</p>
+			{primaryStory.label && <p class="story-label">{primaryStory.label}</p>}
 			<p>{primaryStory.readTime}</p>
 		</div>
 		<div class="feature-primary__copy">
@@ -171,7 +171,7 @@ const { primaryStory, secondaryStories, developmentOnly = false } = Astro.props;
 	}
 
 	.feature-primary__guide p:last-child {
-		margin-top: 0.65rem;
+		margin-top: 0;
 		color: #59656e;
 		letter-spacing: 0.04em;
 		text-transform: none;

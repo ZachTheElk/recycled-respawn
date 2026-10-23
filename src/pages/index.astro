@@ -15,11 +15,13 @@ import Layout from '../layouts/Layout.astro';
 const { featuredStory, newestColumn, gamingSection, cultureSection, featuresSection } = await getHomepageStories();
 const recentArticles = getRecentArticles(await getCollection('articles'), 4);
 const canonicalUrl = new URL('/', Astro.site);
+const description = 'Independent games writing from the spaces between: the records behind the games, the voices behind the characters, and the culture games leave behind.';
+const socialImage = new URL('/og-default.png', Astro.site);
 const visibleStories = [featuredStory, newestColumn, gamingSection.leadStory, ...gamingSection.supportingStories, cultureSection.leadStory, featuresSection.primaryStory].filter(Boolean);
 const hasPrivateDrafts = visibleStories.some((story) => story?.isPrivatePreview);
 ---
 
-<Layout {canonicalUrl} noindex={hasPrivateDrafts}>
+<Layout {canonicalUrl} {description} {socialImage} socialImageWidth={1200} socialImageHeight={630} socialImageType="image/png" noindex={hasPrivateDrafts}>
 	<a class="skip-link" href="#main-content">Skip to main content</a>
 	<div class="site-frame">
 		<SiteHeader />

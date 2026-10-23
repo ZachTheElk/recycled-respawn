@@ -27,7 +27,6 @@ const formatType = (type: ArticleType) => type.charAt(0).toUpperCase() + type.sl
 			</ul>
 		</section>
 		<section class="rail-module recent-publications" aria-labelledby="recent-publications-title">
-			<p class="rail-kicker">From the archive</p>
 			<h2 id="recent-publications-title">Latest</h2>
 			{recentArticles.length > 0 ? (
 				<ol class="recent-list">
@@ -45,7 +44,7 @@ const formatType = (type: ArticleType) => type.charAt(0).toUpperCase() + type.sl
 		</section>
 
 		<section class="rail-module site-update" aria-labelledby="site-update-title">
-			<p class="rail-kicker">{siteUpdate.developmentOnly ? 'Launch copy · Pre-launch preview' : 'Publication note'}</p>
+			{siteUpdate.developmentOnly && <p class="rail-kicker">Launch copy · Pre-launch preview</p>}
 			<h2 id="site-update-title">SITE UPDATE //</h2>
 			<h3>{siteUpdate.title}</h3>
 			{siteUpdate.date && <time datetime={siteUpdate.date.toISOString()}>{formatArticleDate(siteUpdate.date)}</time>}

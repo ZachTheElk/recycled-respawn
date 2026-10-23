@@ -30,7 +30,6 @@ const { leadStory, briefs, developmentOnly = false } = Astro.props;
 <section class="culture-section" aria-labelledby="culture-section-title">
 	<header class="culture-section__header">
 		<div>
-			<p class="culture-section__eyebrow">Section</p>
 			<h2 id="culture-section-title">Culture</h2>
 		</div>
 		{developmentOnly && <p class="culture-section__development-note">{leadStory.isPrivatePreview ? 'Unpublished draft · Briefs are development samples' : 'Development-only section sample'}</p>}
@@ -38,7 +37,6 @@ const { leadStory, briefs, developmentOnly = false } = Astro.props;
 
 	<article class="culture-lead" aria-labelledby="culture-lead-headline">
 		<div class="culture-lead__copy">
-			<p class="story-label">Culture lead</p>
 			<h3 id="culture-lead-headline">
 				{leadStory.href ? <a href={leadStory.href}>{leadStory.headline}</a> : leadStory.headline}
 			</h3>
@@ -74,10 +72,9 @@ const { leadStory, briefs, developmentOnly = false } = Astro.props;
 			{!leadStory.image.src && <figcaption>{leadStory.image.alt}</figcaption>}
 			{leadStory.image.credit && (
 				<figcaption>
-					{leadStory.image.credit.replace('Uncropped;', 'Original source uncropped;')}
+					{leadStory.image.credit}
 					{leadStory.image.sourceUrl && <>{' '}<a href={leadStory.image.sourceUrl}>Source</a></>}
 					{leadStory.image.license && <>{' License: '}{leadStory.image.licenseUrl ? <a href={leadStory.image.licenseUrl}>{leadStory.image.license}</a> : leadStory.image.license}{'.'}</>}
-					{' Card display: 3:2 crop.'}
 				</figcaption>
 			)}
 

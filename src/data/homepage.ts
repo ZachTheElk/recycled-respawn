@@ -49,7 +49,7 @@ function normalizeArticle(article: ArticleEntry): NormalizedStory {
 			src: article.data.hero.image.src,
 			asset: article.data.hero.image,
 			alt: article.data.hero.alt,
-			credit: article.data.hero.credit,
+			credit: article.data.hero.credit.replace(' Uncropped; resized and converted to WebP for display.', ''),
 			sourceUrl: article.data.hero.sourceUrl,
 			license: article.data.hero.license,
 			licenseUrl: article.data.hero.licenseUrl,

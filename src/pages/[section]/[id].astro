@@ -49,6 +49,22 @@ const socialImageAsset = !isPrivatePreview && data.hero
 	})
 	: undefined;
 const socialImage = socialImageAsset ? new URL(socialImageAsset.src, Astro.site) : undefined;
+const structuredData = !data.draft ? {
+	'@context': 'https://schema.org',
+	'@type': 'Article',
+	'@id': new URL('#article', canonicalUrl).href,
+	url: canonicalUrl.href,
+	mainEntityOfPage: canonicalUrl.href,
+	headline: data.title,
+	description: data.seoDescription ?? data.dek,
+	author: { '@type': 'Person', name: data.author },
+	publisher: { '@type': 'Organization', '@id': new URL('#publisher', Astro.site).href, name: 'Recycled Respawn', url: Astro.site!.href },
+	datePublished: data.publishedAt.toISOString(),
+	dateModified: data.updatedAt?.toISOString(),
+	image: socialImage?.href,
+	articleSection: sectionLabel,
+	isPartOf: { '@id': new URL('#website', Astro.site).href },
+} : undefined;
 ---
 
 <Layout
@@ -56,6 +72,7 @@ const socialImage = socialImageAsset ? new URL(socialImageAsset.src, Astro.site)
 	description={data.seoDescription ?? data.dek}
 	canonicalUrl={canonicalUrl}
 	ogType="article"
+	{structuredData}
 	socialImage={socialImage}
 	publishedAt={isPrivatePreview ? undefined : data.publishedAt}
 	updatedAt={data.updatedAt}

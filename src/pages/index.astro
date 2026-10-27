@@ -16,12 +16,18 @@ const { featuredStory, newestColumn, gamingSection, cultureSection, featuresSect
 const recentArticles = getRecentArticles(await getCollection('articles'), 4);
 const canonicalUrl = new URL('/', Astro.site);
 const description = 'Independent games writing from the spaces between: the records behind the games, the voices behind the characters, and the culture games leave behind.';
-const socialImage = new URL('/og-default.png', Astro.site);
+const structuredData = {
+	'@context': 'https://schema.org',
+	'@graph': [
+		{ '@type': 'WebSite', '@id': new URL('#website', Astro.site).href, name: 'Recycled Respawn', url: Astro.site!.href, description, publisher: { '@id': new URL('#publisher', Astro.site).href } },
+		{ '@type': 'Organization', '@id': new URL('#publisher', Astro.site).href, name: 'Recycled Respawn', url: Astro.site!.href },
+	],
+};
 const visibleStories = [featuredStory, newestColumn, gamingSection.leadStory, ...gamingSection.supportingStories, cultureSection.leadStory, featuresSection.primaryStory].filter(Boolean);
 const hasPrivateDrafts = visibleStories.some((story) => story?.isPrivatePreview);
 ---
 
-<Layout {canonicalUrl} {description} {socialImage} socialImageWidth={1200} socialImageHeight={630} socialImageType="image/png" noindex={hasPrivateDrafts}>
+<Layout {canonicalUrl} {description} structuredData={hasPrivateDrafts ? undefined : structuredData} noindex={hasPrivateDrafts}>
 	<a class="skip-link" href="#main-content">Skip to main content</a>
 	<div class="site-frame">
 		<SiteHeader />

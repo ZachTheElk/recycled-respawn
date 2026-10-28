@@ -14,6 +14,8 @@ npm run build
 
 Publication-ready Markdown articles live in `src/content/articles/`. Article URLs follow `/{section}/{id}/`, such as `/gaming/example-article/`.
 
+Ordinary builds exclude draft entries at the content-loader boundary so draft-only images never enter the emitted asset graph. Local development and Deploy Previews retain drafts; the existing private-preview allowlist controls which draft routes can be reviewed. Keep article-specific images alongside their Markdown and use the normal `draft` field.
+
 Homepage placement is curated in `src/data/homepage.ts`; Latest, section listings, and RSS derive from published article records.
 
 ## Workflow and production safety

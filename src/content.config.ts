@@ -1,8 +1,21 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+const articleFiles = glob({ base: './src/content/articles', pattern: '**/*.md' });
+
 const articles = defineCollection({
-	loader: glob({ base: './src/content/articles', pattern: '**/*.md' }),
+	loader: {
+		name: 'articles-with-draft-boundary',
+		async load(context) {
+			await articleFiles.load(context);
+			// Route filtering happens too late to exclude content images from the asset graph.
+			// Remove drafts before Astro writes the collection's asset imports for ordinary builds.
+			if (import.meta.env.DEV || process.env.CONTEXT === 'deploy-preview') return;
+			for (const [id, entry] of context.store.entries()) {
+				if (entry.data.draft === true) context.store.delete(id);
+			}
+		},
+	},
 	schema: ({ image }) => {
 		const hero = z
 			.object({

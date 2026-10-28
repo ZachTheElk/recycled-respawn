@@ -4,8 +4,8 @@ dek: "EA closed the company. It could not close what the company handed over."
 author: "ZachTheElk"
 section: "features"
 type: "article"
-publishedAt: "2026-10-27T00:00:00-04:00"
-draft: true
+publishedAt: "2026-10-28T00:54:30.699Z"
+draft: false
 hero:
   image: "./what-bioware-handed-over/hero-sr1.jpg"
   alt: "The Normandy SR-1 flying through space against a nebula in Mass Effect."

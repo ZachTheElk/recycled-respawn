@@ -2,7 +2,7 @@
 import type { ArticleEntry, ArticleType } from '../lib/articles';
 import { formatArticleDate, formatArticleSection, getArticleUrl } from '../lib/articles';
 import { playerStatus } from '../data/currently-playing';
-import { siteUpdate } from '../data/site-update';
+import { siteUpdates } from '../data/site-update';
 
 interface Props {
 	recentArticles: ArticleEntry[];
@@ -44,18 +44,35 @@ const formatType = (type: ArticleType) => type.charAt(0).toUpperCase() + type.sl
 		</section>
 
 		<section class="rail-module site-update" aria-labelledby="site-update-title">
-			{siteUpdate.developmentOnly && <p class="rail-kicker">Launch copy · Pre-launch preview</p>}
 			<h2 id="site-update-title">SITE UPDATE //</h2>
-			<h3>{siteUpdate.title}</h3>
-			{siteUpdate.date && <time datetime={siteUpdate.date.toISOString()}>{formatArticleDate(siteUpdate.date)}</time>}
-			<p>{siteUpdate.text}</p>
-			{siteUpdate.href && siteUpdate.linkLabel && <a class="site-update-link" href={siteUpdate.href}>{siteUpdate.linkLabel}</a>}
+			{siteUpdates.slice(0, 3).map((update) => (
+				<div class="site-update-entry">
+					<h3>{update.title}</h3>
+					<time datetime={update.date.toISOString()}>{formatArticleDate(update.date)}</time>
+					<p>{update.text}</p>
+					{update.href && update.linkLabel && <a class="site-update-link" href={update.href}>{update.linkLabel}</a>}
+				</div>
+			))}
+			{siteUpdates.length > 3 && <a class="site-update-link" href="/past-updates/">Past updates</a>}
 		</section>
 	</div>
 </aside>
 
 
 <style>
+	.site-update-entry + .site-update-entry {
+		margin-top: 1rem;
+		padding-top: 1rem;
+		border-top: 1px solid #c5cbce;
+	}
+
+	.site-update-entry p {
+		margin: 0.45rem 0 0;
+		color: var(--shell-gray-500);
+		font-size: 0.9rem;
+		line-height: 1.5;
+	}
+
 	.player-status-label {
 		color: var(--shell-blue-700);
 		font-family: Arial, Helvetica, sans-serif;

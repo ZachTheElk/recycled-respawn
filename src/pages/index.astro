@@ -13,7 +13,6 @@ import { getRecentArticles } from '../lib/articles';
 import Layout from '../layouts/Layout.astro';
 
 const { featuredStory, newestColumn, gamingSection, cultureSection, featuresSection } = await getHomepageStories();
-const recentArticles = getRecentArticles(await getCollection('articles'), 4);
 const canonicalUrl = new URL('/', Astro.site);
 const description = 'Independent games writing from the spaces between: the records behind the games, the voices behind the characters, and the culture games leave behind.';
 const structuredData = {
@@ -24,6 +23,11 @@ const structuredData = {
 	],
 };
 const visibleStories = [featuredStory, newestColumn, gamingSection.leadStory, ...gamingSection.supportingStories, cultureSection.leadStory, featuresSection.primaryStory].filter(Boolean);
+const selectedStoryIds = new Set(visibleStories.map((story) => story!.id));
+const recentArticles = getRecentArticles(
+	(await getCollection('articles')).filter((article) => !selectedStoryIds.has(article.id)),
+	4,
+);
 const hasPrivateDrafts = visibleStories.some((story) => story?.isPrivatePreview);
 ---
 

@@ -78,9 +78,9 @@ The homepage is approved through:
 - Culture
 - Features
 
-Major homepage section expansion is paused. Do not assume that another homepage module, right-rail module, or “Implementation 07” should begin automatically. The next likely phase is Content Foundation work using real Zach-authored material.
+The homepage modules are established. Do not begin another homepage or right-rail module without an explicit requirement. Article intake and publication use the existing content foundation.
 
-Prefer Markdown for ordinary editorial content unless a concrete requirement demonstrates a need for MDX. Do not introduce content collections, schemas, article pages, or publishing infrastructure as a side effect of unrelated work.
+Ordinary articles use Markdown in Astro content collections, with an existing schema, article template, and private-preview workflow. Preserve those established paths; change publishing infrastructure only for a demonstrated requirement.
 
 ## Authoring workflow
 
@@ -105,7 +105,7 @@ Stop and report any material discrepancy before implementation. Do not bypass au
 
 Honor the task's explicit scope. Do not refactor code, alter dependencies or configuration, add content architecture, or begin the next implementation unless the user requested it. Preserve unrelated user changes in a dirty worktree and stop for direction if they cannot be safely separated.
 
-Before production launch, perform a deliberate placeholder audit covering:
+Before publishing new work, inspect active output for unintended scaffolding, including:
 
 - Development imagery and starter assets
 - Sample content and fake metadata

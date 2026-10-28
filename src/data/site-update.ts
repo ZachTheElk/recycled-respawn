@@ -7,7 +7,7 @@ export interface SiteUpdate {
 	developmentOnly?: boolean;
 }
 
-// Approved public-state copy for the October 17 launch candidate.
+// Approved public launch announcement.
 export const siteUpdate: SiteUpdate = {
 	title: 'Respawned.',
 	date: new Date('2026-10-17T15:00:00-04:00'),

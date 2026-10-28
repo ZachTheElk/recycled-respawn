@@ -2,6 +2,7 @@ import { getCollection } from 'astro:content';
 import { isPrivatePreviewArticle } from './private-preview';
 import {
 	estimateReadTime,
+	getRecentArticles,
 	formatArticleDate,
 	formatArticleSection,
 	getArticleUrl,
@@ -12,7 +13,8 @@ import {
 // Homepage placement is editorial curation state, never article frontmatter.
 // Drafts require explicit allowlisting during private review; published stories are public.
 export const homepageCuration = {
-	featured: 'can-you-pet-that-dog',
+	// Set a published article ID for a deliberate override; null follows newest site-wide.
+	featured: null as string | null,
 	column: 'never-trust-the-quiet-ones',
 	gaming: {
 		lead: 'just-enough-rope',
@@ -75,8 +77,15 @@ export async function getHomepageStories() {
 		return normalizeArticle(article);
 	}
 
+	const featuredArticle = homepageCuration.featured === null
+		? getRecentArticles(articles, 1)[0]
+		: articles.find((article) => article.id === homepageCuration.featured && !article.data.draft);
+	if (homepageCuration.featured !== null && !featuredArticle) {
+		throw new Error(`Featured Story override requires a published article: ${homepageCuration.featured}`);
+	}
+
 	return {
-		featuredStory: curatedStory(homepageCuration.featured, 'culture', 'article'),
+		featuredStory: featuredArticle ? normalizeArticle(featuredArticle) : undefined,
 		newestColumn: curatedStory(homepageCuration.column, 'gaming', 'opinion'),
 		gamingSection: {
 			leadStory: curatedStory(homepageCuration.gaming.lead, 'gaming', 'opinion'),

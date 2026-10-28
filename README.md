@@ -16,13 +16,19 @@ Publication-ready Markdown articles live in `src/content/articles/`. Article URL
 
 Ordinary builds exclude draft entries at the content-loader boundary so draft-only images never enter the emitted asset graph. Local development and Deploy Previews retain drafts; the existing private-preview allowlist controls which draft routes can be reviewed. Keep article-specific images alongside their Markdown and use the normal `draft` field.
 
-Homepage placement is curated in `src/data/homepage.ts`; Latest, section listings, and RSS derive from published article records.
+Homepage placement is curated in `src/data/homepage.ts`. Featured Story defaults to the newest published article across the site; set `homepageCuration.featured` to a published article ID for an explicit override, or `null` to restore automatic selection. Latest derives from published records and excludes stories selected by the other homepage story modules. Section listings and RSS derive from published article records.
 
 ## Workflow and production safety
 
 Development follows branch → PR → build → Netlify Deploy Preview → review → merge. Production publication remains a separate, explicitly approved manual action.
 
 Netlify Auto Publishing is intentionally **Locked**. Do not unlock it or replace the canonical production site without explicit approval.
+
+Before each publication pass, check the homepage:
+
+- Featured Story follows the newest published article automatically unless deliberately overridden. Reconsider any existing override.
+- Update Player Status in `src/data/currently-playing.ts` only if the actual state changed.
+- Add a short Site Update in `src/data/site-update.ts` only when something meaningful happened. Preserve older entries; display is newest first, with the latest three on the homepage and older entries at `/past-updates/`.
 
 See [`AGENTS.md`](AGENTS.md) for detailed project boundaries, operational rules, and verification requirements.
 

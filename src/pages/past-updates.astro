@@ -1,0 +1,31 @@
+---
+import PublicationPage from '../components/PublicationPage.astro';
+import { siteUpdates } from '../data/site-update';
+import { formatArticleDate } from '../lib/articles';
+
+const pastUpdates = siteUpdates.slice(3);
+---
+
+<PublicationPage
+	title="Past Updates | Recycled Respawn"
+	description="Earlier site updates from Recycled Respawn."
+	heading="Past Updates"
+	intro="Earlier notes from the site, newest first."
+>
+	<p>The latest three updates appear on the <a href="/#site-update-title">homepage</a>.</p>
+	{pastUpdates.length === 0 && <p>No older updates yet.</p>}
+	{pastUpdates.map((update) => (
+		<section>
+			<h2>{update.title}</h2>
+			<time datetime={update.date.toISOString()}>{formatArticleDate(update.date)}</time>
+			<p>{update.text}</p>
+			{update.href && update.linkLabel && <p><a href={update.href}>{update.linkLabel}</a></p>}
+		</section>
+	))}
+</PublicationPage>
+
+<style>
+	section:first-of-type {
+		margin-top: 1.5rem;
+	}
+</style>

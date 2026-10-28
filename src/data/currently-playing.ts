@@ -8,12 +8,12 @@ export interface PlayerStatusEntry {
 export const playerStatus: PlayerStatusEntry[] = [
 	{
 		label: 'Now Playing',
-		title: 'Star Wars: Galactic Racer',
-		text: 'Takes me right back to playing Star Wars: Episode I Racer as a kid.',
+		title: 'The Witcher 3',
+		text: 'Swords, signs, and side quests that swallow whole evenings.',
 	},
 	{
 		label: 'Stuck On',
-		text: 'Finding time to return to Valheim.',
+		text: 'Too many games, not enough evenings.',
 	},
 	{
 		label: 'Up Next',

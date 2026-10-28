@@ -9,7 +9,7 @@ draft: true
 hero:
   image: "./what-bioware-handed-over/hero-sr1.jpg"
   alt: "The Normandy SR-1 flying through space against a nebula in Mass Effect."
-  credit: "The Normandy SR-1 (Mass Effect, 2007). Image: BioWare / EA."
+  credit: "The Normandy SR-1 (Mass Effect, 2007). Image: BioWare / Electronic Arts."
   provenance: "editorial"
   sourceUrl: "https://static0.srcdn.com/wordpress/wp-content/uploads/2021/05/Mass-Effect-Normandy-Changes-All-Games.jpg"
 ---
@@ -25,7 +25,7 @@ The memories that stuck are not the big set pieces. They are lines and rooms. Th
 
 ![Wrex and Garrus armed in combat in the original Mass Effect.](./what-bioware-handed-over/inline-crew-garrus-wrex.jpg)
 
-<figcaption>Wrex and Garrus (Mass Effect). Image: BioWare / EA.</figcaption>
+<figcaption>Wrex and Garrus (Mass Effect). Image: BioWare / Electronic Arts.</figcaption>
 </figure>
 
 I did not know who made any of this when I was playing it. I was ten or twelve and I had not learned to associate developers with games yet. I had played KOTOR and Jade Empire and probably Origins by the time I saw the interview. Tommy Tallarico was interviewing them, probably on Judgment Day, and what stuck with me was learning that one of them was an actual doctor. The truth is better than my memory: all three of them were. Ray Muzyka, Greg Zeschuk, and Augustine Yip were all medical doctors. Muzyka and Zeschuk had been writing medical education software for the University of Alberta when Yip joined their partnership, and in 1995 they founded a game studio in Zeschuk's basement. The studio was literally run by doctors, and I found that out on television before I knew what a developer was. A studio with faces. That was normal then. You could know the names of the people who made your favorite thing, and the names meant something.
@@ -35,7 +35,7 @@ I did not know who made any of this when I was playing it. I was ten or twelve a
 
 ![BioWare co-founders Ray Muzyka and Greg Zeschuk pictured together.](./what-bioware-handed-over/inline-doctors.jpg)
 
-<figcaption>Ray Muzyka and Greg Zeschuk, BioWare co-founders. Photo: BioWare / EA.</figcaption>
+<figcaption>Ray Muzyka and Greg Zeschuk, BioWare co-founders. Photo: BioWare / Electronic Arts.</figcaption>
 </figure>
 
 I kept showing up for BioWare long after the golden run. That matters, because the easy version of this essay is that I quit in 2012 and everything after was betrayal, and that is not what happened. Andromeda had a great premise, but it was not Mass Effect. I loved Anthem and I was sad when it shut down, but it was a shell of a game. And my BioWare ended, technically, at Veilguard. I played it maybe five hours. It just was not it, and I want to be clear about this because the internet will not be: it was not the "woke" argument, it was not that. It just was not Dragon Age, in my honest opinion. It had been too long since Inquisition, and BioWare had changed so much in the meantime that the name on the box and the thing in the box had come apart. The people left in stages. Muzyka and Zeschuk left in 2012. The veterans left across the decade that followed, in layoffs and departures and quiet exits. By the time EA announced the closure on October 21, there were about fifty people left at BioWare, with a small team working on a Mass Effect game that never got an officially announced title, and the studio they worked for had been leaving the building, person by person, for years. The closure closed a name and an office. The dispersal happened long before.
@@ -45,15 +45,3 @@ That is why the leaked trailer hit the way it did. A day after the announcement,
 So here is the part that is not the elegy. The petition asks EA to fund Mass Effect or license it to someone else, and more than 260,000 people have signed it, and EA has said nothing. My dream is that CD Projekt Red gets it, and I will not pretend that is not a wish. But the wish is not the argument. The argument is what already happened in public the week BioWare died. CD Projekt's joint CEO posted that BioWare was a massive part of CDPR history: they had localized Baldur's Gate in Poland, and later BioWare lent them the Aurora Engine for the first Witcher, shared their knowledge, and gave them a spot at the E3 booth, where an early build of the Witcher was shown behind a curtain in 2004. The director of the cancelled Mass Effect replied to him: "Thank you, Michał. We have always been your fans. And always will be." The studio that lent CD Projekt its engine and a corner of its E3 booth got thanked in public the week it died, and the people who were making the next Mass Effect thanked them back. That is the inheritance, already in motion, whether or not EA ever licenses anything. The template did not die with the studio. It lives in the studios BioWare helped, directly or by example, and in Larian, and in CD Projekt, and in every game that gives you a crew and a hub and a choice that matters. Ideally, it just would not die. It would be given to someone who would respect the IP, the dream, and the vision of the original devs and creators. But even if it is not, the handing over already happened, and it happened years ago.
 
 BioWare closed. The Normandy did not. It was never really theirs to close. It was mine, and it was yours, and it was everyone who ever decided that a ship and a crew were enough to build a galaxy out of. That is what a studio is, when it works: not an office in Edmonton, but a set of people who hand you something and trust your imagination to finish it. The people are gone. The handing over is not.
-
----
-
-Sources:
-
-- Closure, cancellation, job counts (Bloomberg-reported), EA staff letter, BioWare farewell: Oct 21, 2026 coverage; BioWare on X.
-- Petition (#SaveMassEffect, Change.org, Oct 21, 2026): 260,048 verified signatures displayed on the live page at 7:38 PM ET, Oct 27, 2026; asks EA to fund Mass Effect or license the IP. (Counts move fast; reports during Oct 27 ranged from 223,000 to 246,000 depending on when they were checked.)
-- Leaked trailer ("Mass Effect: Universe," ~2 min, internal, pre-production assets): confirmed real by Bloomberg's Jason Schreier and IGN, Oct 22, 2026; setting centuries after Mass Effect 3, customizable N7 agent protagonist, Liara returning. "Universe" was an internal title card, not an officially announced title.
-- Saren's line: "Set the charges. Destroy the entire colony. Leave no evidence that we were here," Mass Effect (2007), Eden Prime recording shown to the Council.
-- Mordin Solus's death: Mass Effect 3, Tuchanka, dispersing the genophage cure from the Shroud tower, singing Gilbert and Sullivan; "Had to be me. Someone else might have gotten it wrong." Mordin worked on the later salarian modification of the genophage, not the original.
-- Founders: Muzyka, Zeschuk, Yip, medical doctors, founded BioWare Feb 1, 1995, Edmonton (BioWare official history; Kotaku: the "Doctors" title is earned, not a nickname).
-- CD Projekt Red tribute: Michał Nowakowski on X, Oct 21, 2026 ("a massive part of CDPR history"; Aurora Engine loan, E3 booth space, E3 2004 curtain demo); The Witcher account, Oct 26, 2026 (19th anniversary post); Michael Gamble's reply.

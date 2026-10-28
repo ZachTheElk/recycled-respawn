@@ -53,7 +53,7 @@ const formatType = (type: ArticleType) => type.charAt(0).toUpperCase() + type.sl
 					{update.href && update.linkLabel && <a class="site-update-link" href={update.href}>{update.linkLabel}</a>}
 				</div>
 			))}
-			<a class="site-update-link" href="/past-updates/">Past updates</a>
+			{siteUpdates.length > 3 && <a class="site-update-link" href="/past-updates/">Past updates</a>}
 		</section>
 	</div>
 </aside>

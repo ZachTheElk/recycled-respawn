@@ -13,7 +13,7 @@ export const playerStatus: PlayerStatusEntry[] = [
 	},
 	{
 		label: 'Stuck On',
-		text: 'Too many games, not enough evenings.',
+		text: 'Too many games, not enough time.',
 	},
 	{
 		label: 'Up Next',
